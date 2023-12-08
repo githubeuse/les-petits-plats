@@ -1,0 +1,266 @@
+:root {
+    --jaune: #FFD15B;
+    --noir: #1B1B1B;
+    --gris: #7A7A7A;
+    --grisclair: #EDEDED;
+}
+
+body{
+    width: 100%;
+}
+
+body .header {
+    background-image: url(../assets/images/background_image.png) !important;
+    background-size: cover;
+    padding: 180px 0 130px 0;
+}
+
+.header {
+    text-align: center;
+    padding: 40px;
+    color: var(--jaune);
+    -webkit-box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.25) inset, 0 -15px 15px -15px rgba(0, 0, 0, 0.25) inset;
+    box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.25) inset, 0 -15px 15px -15px rgba(0, 0, 0, 0.25) inset;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 51px;
+    left: 69px;
+
+}
+
+h1 {
+    font-family: Anton;
+    font-size: 3em;
+    padding-bottom: 30px;
+}
+
+form {
+    position: relative;
+    width: 540px;
+    margin: 22px auto 0;
+}
+
+span {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+
+
+form input[type="text"] {
+    padding: 15px 20px;
+    padding-right: 100px;
+    border-color: transparent;
+    border-radius: 4px;
+}
+
+/* doublon? */
+input[type=text] {
+    box-sizing: border-box;
+}
+
+/* Recherche principale : texte du input */
+input.InputBox {
+    font-family: Manrope;
+    color: #333;
+    font-size: 15px;
+    padding: 15px;
+    margin: 0;
+    width: 250px;
+    background: #fff;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+/* doublon? */
+.InputBox {
+    color: var(--gris);
+    display: block;
+    width: 100% !important;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 11px;
+    color: red;
+}
+
+form input[type="submit"] {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    float: right;
+    padding: 10px 25px;
+    cursor: pointer;
+}
+
+
+/* Recherche principale : input */
+/* input[type="submit"] { */
+    /*-webkit-appearance: button;
+    }*/
+
+
+
+/*.Button,
+.Button:hover,
+.Button:focus,
+.Button:active {
+    text-shadow: none;
+    border-color: transparent;
+}*/
+
+/* Recherche principale : bouton de recherche */
+.search-button {
+    background-color: var(--noir);
+    color: white;
+    border-radius: 10px;
+    margin-top: 2px;
+    margin-right: 3px;
+    height: 90%;
+    width: 51px;
+    font-family: Manrope;
+}
+
+/* Zone de résultats */
+.resultats {
+    background-color: var(--grisclair);
+    height: 300px;
+}
+
+/* Zone de recherche approfondie */
+.filter-line{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+}
+
+/* Zone de recherche approfondie : container des dropdowns */
+.dropdowns-container {
+    display: flex;
+    font-family: Manrope;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    gap: 20px;
+}
+
+/* nombre de recettes*/
+.number-of-results {
+    color: black;
+    font-family: Anton;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+/* Bouton dropdown principal */
+.dropbtn {
+    background-color: white;
+    color: black;
+    width: 10vw;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 11px 11px 0px 0px;
+
+}
+
+/* Bouton dropdown principal lors du hover et focus */
+.dropbtn:hover,
+.dropbtn:focus {
+    background-color: white;
+    color: black;
+}
+
+/* Recherche avancée : couleur police input */
+#myInput,
+#myInput2,
+#myInput3 {
+    box-sizing: border-box;
+    background-image: url('searchicon.png');
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    width: 10vw;
+}
+
+/* Recherche avancée : lors du focus couleur police input */
+#myInput:focus,
+#myInput2:focus,
+#myInput3:focus
+/*#myInput,
+#myInput2,
+#myInput3*/ {
+    outline: 3px solid #ddd;
+    padding: 12px 16px;
+    position: relative;
+}
+
+/* Recherche avancée : couleur police icone loupe */
+#myInput::placeholder,
+#myInput2::placeholder,
+#myInput3::placeholder {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown,
+.dropdown2,
+.dropdown3 {
+    position: relative;
+    display: inline-block;
+    border-radius: 11px;
+
+
+}
+
+.dropdown-crochet-haut {
+    padding-left: 5px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 10vw;
+    border: 1px solid #ddd;
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: var(--jaune);
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+    display: block;
+}
