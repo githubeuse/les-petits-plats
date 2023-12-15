@@ -5,7 +5,7 @@
     --grisclair: #EDEDED;
 }
 
-body{
+body {
     width: 100%;
 }
 
@@ -31,6 +31,7 @@ body .header {
 
 }
 
+
 h1 {
     font-family: Anton;
     font-size: 3em;
@@ -39,7 +40,7 @@ h1 {
 
 form {
     position: relative;
-    width: 540px;
+    width: 60%;
     margin: 22px auto 0;
 }
 
@@ -101,10 +102,109 @@ form input[type="submit"] {
     cursor: pointer;
 }
 
+.resultats {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.recipes-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+    width: 80%;
+    margin: auto;
+}
+
+.recipeCard{
+    width: 25vw;
+}
+
+
+
+.recipePicture {
+    height: 250px;
+    width: 25vw;
+    border-radius: 21px 21px 0 0;
+    object-fit: cover;
+}
+
+.recipeTextContainer {
+    background: white;
+    padding: 32px 21px 61px 21px;
+    border-radius: 0 0 21px 21px;
+    height: 478px;
+}
+
+
+.recipeTitle {
+    color: #000;
+    font-family: Anton;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.motRecette,
+.motIngredients {
+    color: var(--Grey, #7A7A7A);
+    font-family: Manrope;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.08px;
+    text-transform: uppercase;
+}
+
+.motIngredients{
+    padding-top: 32px;
+}
+
+.recette {
+    color: var(--Black, #1B1B1B);
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    display: inline-block;
+    height: 80px;
+    overflow: hidden;
+}
+
+.ingredientName {
+    color: var(--Black, #1B1B1B);
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.ingredientQuantity,
+.ingredientUnit {
+    color: var(--Grey, #7A7A7A);
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.ingredientQuantityUnitLine{
+    padding-bottom: 21px;
+}
+
+/* Liste des ingredients */
+.divIngredientsDetails {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 
 /* Recherche principale : input */
 /* input[type="submit"] { */
-    /*-webkit-appearance: button;
+/*-webkit-appearance: button;
     }*/
 
 
@@ -132,12 +232,14 @@ form input[type="submit"] {
 /* Zone de résultats */
 .resultats {
     background-color: var(--grisclair);
-    height: 300px;
+    height: 100%;
+    padding-bottom: 100px;
 }
 
 /* Zone de recherche approfondie */
-.filter-line{
+.filter-line {
     padding-top: 20px;
+    padding-bottom: 55px;
     display: flex;
     justify-content: space-between;
     width: 80%;
@@ -175,7 +277,7 @@ form input[type="submit"] {
     border: none;
     cursor: pointer;
     text-align: left;
-    border-radius: 11px 11px 0px 0px;
+    border-radius: 11px ;
 
 }
 
@@ -205,9 +307,11 @@ form input[type="submit"] {
 #myInput:focus,
 #myInput2:focus,
 #myInput3:focus
+
 /*#myInput,
 #myInput2,
-#myInput3*/ {
+#myInput3*/
+    {
     outline: 3px solid #ddd;
     padding: 12px 16px;
     position: relative;
