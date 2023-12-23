@@ -2,11 +2,13 @@ import { Recipe } from "../factories/RecipeFactory.js";
 
 import { appendChild } from "../utils/appendChild.js";
 
-export function recipeTemplate(recipes) {
-    const singleRecipe = new Recipe(recipes);
+export default function recipeTemplate(recipes, ingredient) {
+    const singleRecipe = recipes != null ? new Recipe(recipes) : null;
 
-    const picture = `assets/images/${singleRecipe.image}`;
-
+    let picture;
+    if (singleRecipe != null) {
+        picture = `assets/images/${singleRecipe.image}`;
+    }
     function getRecipeCardDom() {
         const article = document.createElement('article');
         article.setAttribute("class", ".recipeCard");
@@ -46,7 +48,7 @@ export function recipeTemplate(recipes) {
         const divIngredientsDetails = document.createElement('div');
         divIngredientsDetails.setAttribute("class", "divIngredientsDetails");
 
-        const IngredientsDetailsBulk  = singleRecipe.ingredients;
+        const IngredientsDetailsBulk = singleRecipe.ingredients;
         IngredientsDetailsBulk.forEach(ingredientInfo => {
             const ingredientCard = document.createElement("div");
             const ingredientName = document.createElement("span");
@@ -74,8 +76,15 @@ export function recipeTemplate(recipes) {
         });
         recipeTextContainer.appendChild(divIngredientsDetails);
 
- 
+
         return (article);
     }
-    return { getRecipeCardDom };
+
+    function createFilterIngredients() {
+        const ingrContents = document.querySelector("#ingrContents");
+        const singleIngrContent = document.createElement("button");
+        singleIngrContent.innerText = ingredient;
+        ingrContents.appendChild(singleIngrContent);
+    }
+    return { getRecipeCardDom, createFilterIngredients };
 }
