@@ -2,7 +2,7 @@ import { Recipe } from "../factories/RecipeFactory.js";
 
 import { appendChild } from "../utils/appendChild.js";
 
-export default function recipeTemplate(recipes, ingredient) {
+export default function recipeTemplate(recipes, ingredient, ustensil, appliance) {
     const singleRecipe = recipes != null ? new Recipe(recipes) : null;
 
     let picture;
@@ -86,5 +86,21 @@ export default function recipeTemplate(recipes, ingredient) {
         singleIngrContent.innerText = ingredient;
         ingrContents.appendChild(singleIngrContent);
     }
-    return { getRecipeCardDom, createFilterIngredients };
+
+    function createFilterUstensils() {
+        const ustContents = document.querySelector("#ustContents");
+        const singleUstContent = document.createElement("button");
+        singleUstContent.innerText = ustensil;
+        console.log(ustensil);
+        ustContents.appendChild(singleUstContent);
+    }
+    
+    function createFilterAppliances(){
+        const applContents = document.querySelector("#applContents");
+        const singleApplContent = document.createElement("button");
+        singleApplContent.innerText = appliance;
+        applContents.appendChild(singleApplContent);
+    }
+
+    return { getRecipeCardDom, createFilterIngredients, createFilterUstensils, createFilterAppliances};
 }

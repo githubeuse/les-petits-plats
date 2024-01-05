@@ -2,111 +2,182 @@ import recipes from "../../data/recipes.js";
 
 import recipeTemplate from "../templates/recipeTemplate.js";
 
-//formulaire de recherche principal
-let formSearch = document.querySelector("#formSearch");
+let formSearch = document.querySelector("#formSearch"); //formulaire de recherche principal
 
-//tableau avec toutes les recettes, ingredients, ustensiles
+let dataRecord = []; //tableau avec toutes les recettes, ingredients, ustensiles
 
-let dataRecord = [];
+let ingredientsRecord = []; //tableau avec tous les ingredients
 
-let ingredientsRecord = [];
-let ustensilsRecord = [];
-let appliancesRecord = [];
+let ustensilsRecord = []; //tableau avec tous les ustensiles
 
-const recipesSection = document.querySelector(".recipes-section");
-const ingrContents = document.querySelector("#ingrContents");
+let appliancesRecord = []; //tableau avec tous les appareils
 
-//créé le tableau initial avec toutes les recettes
+const recipesSection = document.querySelector(".recipes-section"); //Section contenant les recettes
+
+const ingrContents = document.querySelector("#ingrContents"); //Filtre contenant les ingrédients
+
+
+const ustContents = document.querySelector("#ustContents"); //Filtre contenant les ustenstiles
+
+
+const applContents = document.querySelector("#applContents"); //Filtre contenant les appareils
+
+
+//TODO: fonction pour créér le tableau
 function init() {
     for (let recipe of recipes) {
-        dataRecord.push({
+        dataRecord.push({ // nom de recette
             "label": recipe.name,
             "id": recipe.id
         });
-        dataRecord.push({
+        dataRecord.push({ // description de recette
             "label": recipe.description,
             "id": recipe.id
         });
-        recipe.ingredients.map(ingr => {
+
+        recipe.ingredients.map(ingr => { // chaque ingredient
             dataRecord.push({
                 "label": ingr.ingredient,
                 "id": recipe.id
             });
         });
-        recipe.ustensils.forEach(ustensil => {
-            if (!ustensilsRecord.includes(ustensil)) {
-                ustensilsRecord.push(ustensil);
-            }
-        })
 
-        if (!appliancesRecord.includes(recipe.appliance)) {
-            appliancesRecord.push(recipe.appliance);
-        }
     }
-    console.table(ingredientsRecord);
-    setIngrRecord(recipes);
-}
-init();
 
-//Ecoute ce qui est entré dans le champs input principal
-formSearch.addEventListener("input", function () {
+    setIngrRecord(recipes); // configure les ingredients a partir du tableau recipes 
+    setUstRecord(recipes); // configure les ustensiles à partir du tableau recipes
+    setApplRecord(recipes); // configure les appareils/appliances à partir du tableau recipes
+
+    //console.table(appliancesRecord);
+
+}
+init();//appelle la fonction
+
+
+formSearch.addEventListener("input", function () { //Ecoute ce qui est entré dans le champs input principal
     search();
 });
 
-//filtre le tableau
-function search() {
-    let filterResults = [];
+function search() { //TODO: fonction de recherche
+
+    //tableau temporaire avec toutes les recettes
     let filterRecord = [];
+
+    //tableau avec resultats filtrés
+    let filterResults = [];
+
+    //si l'U entre + de 2 caractères
     if (formSearch.value.length > 2) {
+
+        //vide la section des resultats
         recipesSection.innerHTML = "";
 
+        //verifie si l'input correspond à une data du tableau dataRecord
+        //si oui l'ajoute à filterResults
         for (let singleDataRecord of dataRecord) {
             if (singleDataRecord.label.toLowerCase().includes(formSearch.value.toLowerCase())) {
                 filterResults.push(singleDataRecord);
             }
         }
-        for (let singleFilterResult of filterResults) {
-            for (let singleRecipe of recipes) {
-                if (singleRecipe.id === singleFilterResult.id) {
+
+        // de sorte à constituer un tableau avec uniquement des résultats filtré sans doublon
+        for (let singleFilterResult of filterResults) { // pour chaque élément des résultats filtrés dans filterResults
+            for (let singleRecipe of recipes) { // et pour chaque recette de recipes
+                if (singleRecipe.id === singleFilterResult.id) { // vérifie si les id correspond
+
                     if (!filterRecord.includes(singleRecipe)) {
                         filterRecord.push(singleRecipe);
                     }
                 }
             }
         }
+        //affiche les recettes filtrées dans la section recette
         displayRecipes(filterRecord);
-        ingredientsRecord = [];
+
+
+        ingredientsRecord = []; //crée un tableau temporaire pour les ingredients
+        ustensilsRecord = []; //crée un tableau temporaire pour les ustensiles
+        appliancesRecord = []; // crée un tableau temporaire pour les appareils
+
+
         setIngrRecord(filterRecord);
-        ingrContents.innerHTML = "";
-        displayIngr(ingredientsRecord);
+        setUstRecord(filterRecord);
+        setApplRecord(filterRecord);
+
+
+        ingrContents.innerHTML = ""; //vide le filtre contenant tous les ingrédients
+        displayIngr(ingredientsRecord); //et y affiche les ingredients en fonction de ???
+
+        ustContents.innerHTML = "";
+        displayUst(ustensilsRecord);
+
+        applContents.innerHTML = "";
+        displayAppl(appliancesRecord);
+
+
     }
 }
-//        recipe.ingredients.map(ingr => {
 
-function setIngrRecord(recipes) {
-    for (let recipe of recipes) {
-        for (let ingr of recipe.ingredients) {
-            if (!ingredientsRecord.includes(ingr.ingredient.toLowerCase())) {
-                ingredientsRecord.push(ingr.ingredient.toLowerCase());
-            }
-        }
-    };
-    console.log(ingredientsRecord);
-}
-
-async function displayRecipes(recipes) {
+async function displayRecipes(recipes) { //TODO: fonction pour afficher les recettes dans la section recettes
     const recipesSection = document.querySelector(".recipes-section");
     recipes.forEach((recipe) => {
-        const recipeModel = recipeTemplate(recipe, null);
+        const recipeModel = recipeTemplate(recipe, null, null, null);
         const recipeCardDOM = recipeModel.getRecipeCardDom();
         recipesSection.appendChild(recipeCardDOM);
     });
 }
 
-function displayIngr(ingredients) {
+function setIngrRecord(recipes) { //TODO: fonction pour configurer les ingredients dans ingredientsRecord
+    for (let recipe of recipes) { //pour chaque element du tableau recipes
+        for (let ingr of recipe.ingredients) { //pour chaque élément temporaire de l'objet tableau inclus dans ingredients de recipes
+            if (!ingredientsRecord.includes(ingr.ingredient.toLowerCase())) {// si le tableau ne contient pas l'ingredient
+                ingredientsRecord.push(ingr.ingredient.toLowerCase()); //ajoute l'ingredient au tableau ingredientsRecord
+            }
+        }
+    };
+}
+
+function setUstRecord(recipes) { //TODO: fonction pour configurer les ustensiles en minuscules        
+    for (let recipe of recipes) { // OK
+            for (let ust of recipe.ustensils) {
+                let ustensilLower = ust.toLowerCase();
+                console.log(ustensilLower);
+                if (!ustensilsRecord.includes(ustensilLower)) {
+                    ustensilsRecord.push(ustensilLower);
+                }
+            }
+    }
+    //console.log(ustensilsRecord);
+}
+
+function setApplRecord(recipes) {
+
+    for (let recipe of recipes) {
+        if (!appliancesRecord.includes(recipe.appliance.toLowerCase())) {
+            appliancesRecord.push(recipe.appliance.toLowerCase());
+        }
+    }
+}
+
+function displayIngr(ingredients) { //TODO: fonction pour afficher les ingredients dans le filtre ingredients
     ingredients.forEach((ingredient) => {
-        const recipeModel = recipeTemplate(null, ingredient);
+        const recipeModel = recipeTemplate(null, ingredient, null, null);
         recipeModel.createFilterIngredients();
+    })
+}
+
+function displayUst(ustensiles) {
+    ustensiles.forEach((ustensile) => {
+        //console.log(ustensile);
+        const recipeModel = recipeTemplate(null, null, ustensile, null);
+        recipeModel.createFilterUstensils();
+    })
+}
+
+function displayAppl(appliances) {
+    appliances.forEach((appliance) => {
+        const recipeModel = recipeTemplate(null, null, null, appliance);
+        recipeModel.createFilterAppliances();
     })
 }
 
@@ -115,7 +186,26 @@ async function displayNumberTotalOfRecipes(recipes) {
     numberTotalRecipes.textContent = recipes.length;
 }
 
+function changeSideChevron(){
+    const chevronUp = document.querySelector("#chevron1");
+    const ingrBtn = document.querySelector("#ingrBtn");
+    ingrBtn.addEventListener("click", () => {
+        if (chevronUp.classList.contains("fa-chevron-up")) {
+            chevronUp.classList.remove("fa-chevron-up");
+            chevronUp.classList.add("fa-chevron-down");
+        } else {
+            chevronUp.classList.remove("fa-chevron-down");
+            chevronUp.classList.add("fa-chevron-up");
+        }
+    });   
+    console.log("coucou");
+}
+
 
 displayRecipes(recipes);
 displayNumberTotalOfRecipes(recipes);
+
 displayIngr(ingredientsRecord);
+displayUst(ustensilsRecord);
+displayAppl(appliancesRecord);
+changeSideChevron();
