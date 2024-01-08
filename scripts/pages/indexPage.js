@@ -187,18 +187,41 @@ async function displayNumberTotalOfRecipes(recipes) {
 }
 
 function changeSideChevron(){
-    const chevronUp = document.querySelector("#chevron1");
+    const chevronUp1 = document.querySelector("#chevron1");
     const ingrBtn = document.querySelector("#ingrBtn");
     ingrBtn.addEventListener("click", () => {
-        if (chevronUp.classList.contains("fa-chevron-up")) {
-            chevronUp.classList.remove("fa-chevron-up");
-            chevronUp.classList.add("fa-chevron-down");
+        if (chevronUp1.classList.contains("fa-chevron-up")) {
+            chevronUp1.classList.remove("fa-chevron-up");
+            chevronUp1.classList.add("fa-chevron-down");
         } else {
-            chevronUp.classList.remove("fa-chevron-down");
-            chevronUp.classList.add("fa-chevron-up");
+            chevronUp1.classList.remove("fa-chevron-down");
+            chevronUp1.classList.add("fa-chevron-up");
+        }
+    })   ;
+
+    const chevronUp2 = document.querySelector("#chevron2");
+    const appBtn = document.querySelector("#appBtn");
+    appBtn.addEventListener("click", () => {
+        if (chevronUp2.classList.contains("fa-chevron-up")) {
+            chevronUp2.classList.remove("fa-chevron-up");
+            chevronUp2.classList.add("fa-chevron-down");
+        } else {
+            chevronUp2.classList.remove("fa-chevron-down");
+            chevronUp2.classList.add("fa-chevron-up");
         }
     });   
-    console.log("coucou");
+
+    const chevronUp3 = document.querySelector("#chevron3");
+    const ustBtn = document.querySelector("#ustBtn");
+    ustBtn.addEventListener("click", () => {
+        if (chevronUp3.classList.contains("fa-chevron-up")) {
+            chevronUp3.classList.remove("fa-chevron-up");
+            chevronUp3.classList.add("fa-chevron-down");
+        } else {
+            chevronUp3.classList.remove("fa-chevron-down");
+            chevronUp3.classList.add("fa-chevron-up");
+        }
+    });   
 }
 
 
