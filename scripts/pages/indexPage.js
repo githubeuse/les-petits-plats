@@ -14,14 +14,13 @@ let appliancesRecord = []; //tableau avec tous les appareils
 
 const recipesSection = document.querySelector(".recipes-section"); //Section contenant les recettes
 
-const ingrContents = document.querySelector("#ingrContents"); //Filtre contenant les ingrédients
+const ingrContents = document.querySelector("#ingrContents"); //Filtre contenant les tags ingrédients
 
+const ustContents = document.querySelector("#ustContents"); //Filtre contenant les tags ustenstiles
 
-const ustContents = document.querySelector("#ustContents"); //Filtre contenant les ustenstiles
+const applContents = document.querySelector("#applContents"); //Filtre contenant les tags appareils
 
-
-const applContents = document.querySelector("#applContents"); //Filtre contenant les appareils
-
+const ingrInput = document.querySelector("#ingrInput"); // Input des ingrédients (rech filtrée)
 
 //TODO: fonction pour créér le tableau
 function init() {
@@ -57,6 +56,11 @@ init();//appelle la fonction
 formSearch.addEventListener("input", function () { //Ecoute ce qui est entré dans le champs input principal
     search();
 });
+
+/* ingrInput.addEventListener("input", function() {
+    console.log(ingrInput.value);    
+    filteredSearch();
+}); */
 
 function search() { //TODO: fonction de recherche
 
@@ -114,8 +118,12 @@ function search() { //TODO: fonction de recherche
         applContents.innerHTML = "";
         displayAppl(appliancesRecord);
 
-
     }
+
+    ingrInput.addEventListener("input", function() {
+        console.log(ingrInput.value);    
+    });
+
 }
 
 async function displayRecipes(recipes) { //TODO: fonction pour afficher les recettes dans la section recettes
