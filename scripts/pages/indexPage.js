@@ -22,6 +22,10 @@ const applContents = document.querySelector("#applContents"); //Filtre contenant
 
 const ingrInput = document.querySelector("#ingrInput"); // Input des ingrédients (rech filtrée)
 
+const appInput = document.querySelector("#appInput"); // Input des appareils/appliances
+
+const ustInput = document.querySelector("#ustInput"); // Input des ustensiles
+
 //TODO: fonction pour créér le tableau
 function init() {
     for (let recipe of recipes) {
@@ -56,11 +60,6 @@ init();//appelle la fonction
 formSearch.addEventListener("input", function () { //Ecoute ce qui est entré dans le champs input principal
     search();
 });
-
-/* ingrInput.addEventListener("input", function() {
-    console.log(ingrInput.value);    
-    filteredSearch();
-}); */
 
 function search() { //TODO: fonction de recherche
 
@@ -121,6 +120,12 @@ function search() { //TODO: fonction de recherche
     }
 
     ingrInput.addEventListener("input", function() {
+        for (let singleIngrRecord of ingredientsRecord) {
+            if (ingrInput.value.includes.singleIngrRecord) {
+                
+            }
+
+        }
         console.log(ingrInput.value);    
     });
 
@@ -189,6 +194,7 @@ function displayAppl(appliances) {
     })
 }
 
+
 async function displayNumberTotalOfRecipes(recipes) {
     const numberTotalRecipes = document.querySelector(".numberTotalRecipes");
     numberTotalRecipes.textContent = recipes.length;
@@ -232,6 +238,44 @@ function changeSideChevron(){
     });   
 }
 
+function filterUst() {
+    ustInput.addEventListener("input", function() {
+        const filteredUst = ustensilsRecord.filter(ustensile => 
+            ustensile.toLowerCase().includes(ustInput.value.toLowerCase()));
+    ustContents.innerHTML ="";
+
+    filteredUst.forEach(ustensile => {
+        const recipeModel = recipeTemplate(null, null, ustensile, null);
+        recipeModel.createFilterUstensils();
+    })
+    });
+}
+
+function filterIngr() {
+    ingrInput.addEventListener("input", function() {
+        const filteredIngr = ingredientsRecord.filter(ingredient => 
+            ingredient.toLowerCase().includes(ingrInput.value.toLowerCase()));
+    ingrContents.innerHTML ="";
+
+    filteredIngr.forEach(ingredient => {
+        const recipeModel = recipeTemplate(null, ingredient, null, null);
+        recipeModel.createFilterIngredients();
+    })
+    });
+}
+
+function filterApp() {
+    appInput.addEventListener("input", function() {
+        const filteredApp = appliancesRecord.filter(appliance => 
+            appliance.toLowerCase().includes(appInput.value.toLowerCase()));
+    applContents.innerHTML ="";
+
+    filteredApp.forEach(appliance => {
+        const recipeModel = recipeTemplate(null, null, null, appliance);
+        recipeModel.createFilterAppliances();
+    })
+    });
+}
 
 displayRecipes(recipes);
 displayNumberTotalOfRecipes(recipes);
@@ -239,4 +283,9 @@ displayNumberTotalOfRecipes(recipes);
 displayIngr(ingredientsRecord);
 displayUst(ustensilsRecord);
 displayAppl(appliancesRecord);
+
 changeSideChevron();
+
+filterUst();
+filterIngr();
+filterApp();
