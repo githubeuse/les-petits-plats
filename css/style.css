@@ -102,10 +102,10 @@ form input[type="submit"] {
     cursor: pointer;
 }
 
-.resultats {
+/* .resultats {
     display: flex;
     flex-direction: column;
-}
+} */
 
 
 .recipes-section {
@@ -233,7 +233,9 @@ form input[type="submit"] {
 .resultats {
     background-color: var(--grisclair);
     height: 100%;
-    padding-bottom: 100px;
+    padding-bottom: 300px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Zone de recherche approfondie */
@@ -393,6 +395,23 @@ form input[type="submit"] {
 /* Hover des boutons représentant chaque résultat dans le filtre  */
 .filterListDiv button:hover {
     background: var(--jaune);
+}
+
+
+
+.tagsSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.tag{
+    padding: 17px 18px 17px 18px;
+    background: var(--jaune);
+    border-radius: 10px;
+    border: 0px solid transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
