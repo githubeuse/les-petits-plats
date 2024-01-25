@@ -1,14 +1,49 @@
+const ingrBtn = document.querySelector("#ingrBtn");
+const appBtn = document.querySelector("#appBtn");
+const ustBtn = document.querySelector("#ustBtn");
+
+const ingrDropdown = document.querySelector("#ingrDropdown");
+const appDropdown = document.querySelector("#appDropdown");
+const ustDropdown = document.querySelector("#ustDropdown");
+
 function showDropdown() {
-  document.querySelector("#ingrBtn").addEventListener("click", function () {
-    document.querySelector("#ingrDropdown").classList.toggle("show");
+  ingrBtn.addEventListener("click", function () {
+    ingrDropdown.classList.toggle("show");
+
+    if (appDropdown.classList.contains("show")) {
+      appDropdown.classList.remove("show");
+    }
+
+    if (ustDropdown.classList.contains("show")) {
+      ustDropdown.classList.remove("show");
+
+    }
   });
 
-  document.querySelector("#appBtn").addEventListener("click", function() {
-    document.querySelector("#appDropdown").classList.toggle("show");
+  appBtn.addEventListener("click", function () {
+    appDropdown.classList.toggle("show");
+
+    if (ingrDropdown.classList.contains("show")) {
+      ingrDropdown.classList.remove("show");
+    }
+
+    if (ustDropdown.classList.contains("show")) {
+      ustDropdown.classList.remove("show");
+    }
   });
-  
-  document.querySelector("#ustBtn").addEventListener("click", function() {
-    document.querySelector("#ustDropdown").classList.toggle("show");
+
+
+  ustBtn.addEventListener("click", function () {
+    ustDropdown.classList.toggle("show");
+
+    if (ingrDropdown.classList.contains("show")) {
+      ingrDropdown.classList.remove("show");
+    }
+
+    if (appDropdown.classList.contains("show")) {
+      appDropdown.classList.remove("show");
+    }
+
   });
 }
 showDropdown();

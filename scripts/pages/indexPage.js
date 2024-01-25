@@ -252,6 +252,8 @@ function changeSideChevron() { //TODO: fonction pour changer le sens du chevron 
     const chevronUp3 = document.querySelector("#chevron3");
     const ustBtn = document.querySelector("#ustBtn");
     ustBtn.addEventListener("click", () => {
+
+        
         if (chevronUp3.classList.contains("fa-chevron-up")) {
             chevronUp3.classList.remove("fa-chevron-up");
             chevronUp3.classList.add("fa-chevron-down");
@@ -389,20 +391,19 @@ const appDropdown = document.querySelector("#appDropdown"); //Zone de dropdown d
 
 // Fonction pour filtrer les recettes selon le tag INGREDIENTS
 ingrDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ingr
-    ingrDropdown.classList.remove("show");
+    //ingrDropdown.classList.remove("show");
 
 
     if (event.target.tagName == "BUTTON") {
         const selectedIngrTag = event.target.textContent.toLowerCase();
         filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ingredients.some(ingr => ingr.ingredient.toLowerCase() === selectedIngrTag));
         updateRecipes(filterRecord);
-         console.table("1", filterRecord);
+        console.table("1", filterRecord);
     }
 });
 
 // Fonction pour filtrer les recettes selon le tag APPAREILS/APPLIANCES
 appDropdown.addEventListener("click", function (event) { // filtre en fonction du tag app
-    appDropdown.classList.remove("show");
 
     if (event.target.tagName == "BUTTON") {
         const selectedAppTag = event.target.textContent.toLowerCase();
@@ -419,7 +420,7 @@ appDropdown.addEventListener("click", function (event) { // filtre en fonction d
 
 //Fonction pour filtrer les recettes selon le tag USTENSILES
 ustDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ustensile
-    ustDropdown.classList.remove("show");
+
 
     if (event.target.tagName == "BUTTON") {
         const selectedUstTag = event.target.textContent.toLowerCase();
@@ -444,7 +445,12 @@ function updateRecipes(updatedRecipes) { //TODO: fonction pour mettre à jour le
     setIngrRecord(updatedRecipes);
     setApplRecord(updatedRecipes);
     setUstRecord(updatedRecipes);
-    
+
+    //enlève class .show aux dropsdowns
+    ingrDropdown.classList.remove("show");
+    appDropdown.classList.remove("show");
+    ustDropdown.classList.remove("show");
+
 }
 
 displayRecipes(recipes);
