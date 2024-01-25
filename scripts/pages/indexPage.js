@@ -164,7 +164,8 @@ function setIngrRecord(recipes) { //TODO: fonction pour configurer les ingredien
                 ingredientsRecord.push(ingr.ingredient.toLowerCase()); //ajoute l'ingredient au tableau ingredientsRecord
             }
         }
-    };
+    }
+    displayIngr(ingredientsRecord);
 }
 
 function setUstRecord(recipes) { //TODO: fonction pour configurer les ustensiles en minuscules        
@@ -178,6 +179,7 @@ function setUstRecord(recipes) { //TODO: fonction pour configurer les ustensiles
         }
     }
     //console.log(ustensilsRecord);
+    displayUst(ustensilsRecord);
 }
 
 function setApplRecord(recipes) { // TODO: fonction poiur configurer les app en minuscules
@@ -187,9 +189,13 @@ function setApplRecord(recipes) { // TODO: fonction poiur configurer les app en 
             appliancesRecord.push(recipe.appliance.toLowerCase());
         }
     }
+
+    displayAppl(appliancesRecord);
+
 }
 
 function displayIngr(ingredients) { //TODO: fonction pour afficher les ingredients dans le filtre ingredients
+    ingrContents.innerHTML = "";
     ingredients.forEach((ingredient) => {
         const recipeModel = recipeTemplate(null, ingredient, null, null);
         recipeModel.createFilterIngredients();
@@ -197,6 +203,7 @@ function displayIngr(ingredients) { //TODO: fonction pour afficher les ingredien
 }
 
 function displayUst(ustensiles) { //TODO: fonction pour afficher les ustensiles dans le filtre ust
+    ustContents.innerHTML = "";
     ustensiles.forEach((ustensile) => {
         //console.log(ustensile);
         const recipeModel = recipeTemplate(null, null, ustensile, null);
@@ -205,6 +212,7 @@ function displayUst(ustensiles) { //TODO: fonction pour afficher les ustensiles 
 }
 
 function displayAppl(appliances) { //TODO: fonction pour afficher les appareils dans le filtre app
+    applContents.innerHTML = "";
     appliances.forEach((appliance) => {
         const recipeModel = recipeTemplate(null, null, null, appliance);
         recipeModel.createFilterAppliances();
@@ -258,6 +266,7 @@ function changeSideChevron() { //TODO: fonction pour changer le sens du chevron 
 
 
 function filterUst() { // TODO: fonction pour filtrer les ustensiles
+
     ustInput.addEventListener("input", function () {
         const filteredUst = ustensilsRecord.filter(ustensile =>
             ustensile.toLowerCase().includes(ustInput.value.toLowerCase()));
@@ -271,7 +280,10 @@ function filterUst() { // TODO: fonction pour filtrer les ustensiles
 }
 
 function filterIngr() { //TODO: fonction pour filtrer les ingrédients
+
     ingrInput.addEventListener("input", function () {
+        console.log("filterResults avant filterIngr", filterResults);
+        console.log("ingredientsRecord avant", ingredientsRecord);
         const filteredIngr = ingredientsRecord.filter(ingredient =>
             ingredient.toLowerCase().includes(ingrInput.value.toLowerCase()));
         ingrContents.innerHTML = "";
@@ -283,7 +295,8 @@ function filterIngr() { //TODO: fonction pour filtrer les ingrédients
     });
 }
 
-function filterApp() { //TODO: fonction pour filtrer les sapp
+function filterApp() { //TODO: fonction pour filtrer les app
+
     appInput.addEventListener("input", function () {
         const filteredApp = appliancesRecord.filter(appliance =>
             appliance.toLowerCase().includes(appInput.value.toLowerCase()));
@@ -381,9 +394,9 @@ ingrDropdown.addEventListener("click", function (event) { // filtre en fonction 
 
     if (event.target.tagName == "BUTTON") {
         const selectedIngrTag = event.target.textContent.toLowerCase();
-        const filteredRecipesByIngrTag = filterRecord.filter(singleFilterRecord => singleFilterRecord.ingredients.some(ingr => ingr.ingredient.toLowerCase() === selectedIngrTag));
-        updateRecipes(filteredRecipesByIngrTag);
-        // console.table("1", filteredRecipesByIngrTag);
+        filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ingredients.some(ingr => ingr.ingredient.toLowerCase() === selectedIngrTag));
+        updateRecipes(filterRecord);
+         console.table("1", filterRecord);
     }
 });
 
@@ -393,10 +406,9 @@ appDropdown.addEventListener("click", function (event) { // filtre en fonction d
 
     if (event.target.tagName == "BUTTON") {
         const selectedAppTag = event.target.textContent.toLowerCase();
-        const filteredRecipesByAppTag = filterRecord.filter(singleFilterRecord => singleFilterRecord.appliance.toLowerCase() === selectedAppTag);
-        console.log(filteredRecipesByAppTag);
-        updateRecipes(filteredRecipesByAppTag);
-        console.log("2", filteredRecipesByAppTag);
+        filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.appliance.toLowerCase() === selectedAppTag);
+        updateRecipes(filterRecord);
+        console.log("2", filterRecord);
     }
 });
 
@@ -411,32 +423,32 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
 
     if (event.target.tagName == "BUTTON") {
         const selectedUstTag = event.target.textContent.toLowerCase();
-        const filteredRecipesByUstTag = filterRecord.filter(singleFilterRecord => singleFilterRecord.ustensils.some(ust => ust.toLowerCase() === selectedUstTag));
-        console.log(filteredRecipesByUstTag);
-        updateRecipes(filteredRecipesByUstTag);
-        // console.log("3", filteredRecipesByUstTag);
+        filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ustensils.some(ust => ust.toLowerCase() === selectedUstTag));
+        updateRecipes(filterRecord);
+        console.log("3", filterRecord);
     }
 });
 
 
-function updateRecipes(recipes) { //TODO: fonction pour mettre à jour les recettes en fonction des tags
+function updateRecipes(updatedRecipes) { //TODO: fonction pour mettre à jour les recettes en fonction des tags
     //console.log('updateRecipes is called with', recipes);
 
     recipesSection.innerHTML = "";
 
-    recipes.forEach((recipe) => {
+    updatedRecipes.forEach((recipe) => {
         const recipeModel = recipeTemplate(recipe, null, null, null);
         const recipeCardDom = recipeModel.getRecipeCardDom();
         recipesSection.appendChild(recipeCardDom);
     })
+
+    setIngrRecord(updatedRecipes);
+    setApplRecord(updatedRecipes);
+    setUstRecord(updatedRecipes);
+    
 }
 
 displayRecipes(recipes);
 displayNumberTotalOfRecipes(recipes);
-
-displayIngr(ingredientsRecord);
-displayUst(ustensilsRecord);
-displayAppl(appliancesRecord);
 
 changeSideChevron();
 
