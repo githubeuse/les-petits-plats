@@ -253,7 +253,7 @@ function changeSideChevron() { //TODO: fonction pour changer le sens du chevron 
     const ustBtn = document.querySelector("#ustBtn");
     ustBtn.addEventListener("click", () => {
 
-        
+
         if (chevronUp3.classList.contains("fa-chevron-up")) {
             chevronUp3.classList.remove("fa-chevron-up");
             chevronUp3.classList.add("fa-chevron-down");
@@ -317,64 +317,81 @@ function filterApp() { //TODO: fonction pour filtrer les app
 ingrContents.addEventListener("click", function (event) {
     const clickedIngr = event.target.innerHTML;
 
-    const newTagIngr = document.createElement("button");
-    newTagIngr.setAttribute("class", "tag");
-    newTagIngr.textContent = clickedIngr;
+    const existingTags = Array.from(ingrTags.getElementsByClassName("tag"));
+    const tagExists = existingTags.some(tag => tag.textContent === clickedIngr);
 
-    const closeTag = document.createElement("i");
-    closeTag.setAttribute("class", "fas fa-times");
+    if (!tagExists) {
+        const newTagIngr = document.createElement("button");
+        newTagIngr.setAttribute("class", "tag");
+        newTagIngr.textContent = clickedIngr;
 
-    newTagIngr.appendChild(closeTag);
-    closeTag.addEventListener("click", function () {
-        newTagIngr.remove();
-        recipesSection.innerHTML = "";
-        displayRecipes(recipes);
-    });
+        const closeTag = document.createElement("i");
+        closeTag.setAttribute("class", "fas fa-times");
 
-    ingrTags.appendChild(newTagIngr);
+        newTagIngr.appendChild(closeTag);
+
+        closeTag.addEventListener("click", function () {
+            newTagIngr.remove();
+            recipesSection.innerHTML = "";
+            displayRecipes(recipes);
+        });
+
+        ingrTags.appendChild(newTagIngr);
+    }
 });
 
 //Créer le tag appareil
 applContents.addEventListener("click", function (event) {
     const clickedApp = event.target.innerHTML;
 
-    const newTagApp = document.createElement("button");
-    newTagApp.setAttribute("class", "tag");
-    newTagApp.textContent = clickedApp;
+    const existingTags = Array.from(appTags.getElementsByClassName("tag"));
+    const tagExists = existingTags.some(tag => tag.textContent === clickedApp);
 
-    const closeTag = document.createElement("i");
-    closeTag.setAttribute("class", "fas fa-times");
+    if (!tagExists) {
 
-    newTagApp.appendChild(closeTag);
-    closeTag.addEventListener("click", function () {
-        newTagApp.remove();
-        recipesSection.innerHTML = "";
-        displayRecipes(recipes);
-    });
+        const newTagApp = document.createElement("button");
+        newTagApp.setAttribute("class", "tag");
+        newTagApp.textContent = clickedApp;
 
-    appTags.appendChild(newTagApp);
+        const closeTag = document.createElement("i");
+        closeTag.setAttribute("class", "fas fa-times");
+
+        newTagApp.appendChild(closeTag);
+        closeTag.addEventListener("click", function () {
+            newTagApp.remove();
+            recipesSection.innerHTML = "";
+            displayRecipes(recipes);
+        });
+
+        appTags.appendChild(newTagApp);
+    }
 })
 
 //Créer le tag ustensile
 ustContents.addEventListener("click", function (event) {
     const clickedUst = event.target.innerHTML;
 
-    const newTagUst = document.createElement("button");
-    newTagUst.setAttribute("class", "tag");
-    newTagUst.textContent = clickedUst;
+    const existingTags = Array.from(ustTags.getElementsByClassName("tag"));
+    const tagExists = existingTags.some(tag => tag.textContent === clickedUst);
 
-    const closeTag = document.createElement("i");
-    closeTag.setAttribute("class", "fas fa-times");
+    if (!tagExists) {
 
-    newTagUst.appendChild(closeTag);
-    closeTag.addEventListener("click", function () {
-        newTagUst.remove();
-        recipesSection.innerHTML = "";
-        displayRecipes(recipes);
-    });
+        const newTagUst = document.createElement("button");
+        newTagUst.setAttribute("class", "tag");
+        newTagUst.textContent = clickedUst;
 
-    ustTags.appendChild(newTagUst);
-})
+        const closeTag = document.createElement("i");
+        closeTag.setAttribute("class", "fas fa-times");
+
+        newTagUst.appendChild(closeTag);
+        closeTag.addEventListener("click", function () {
+            newTagUst.remove();
+            recipesSection.innerHTML = "";
+            displayRecipes(recipes);
+        });
+        ustTags.appendChild(newTagUst);
+    }
+});
 
 const ustDropdown = document.querySelector("#ustDropdown"); //Zone de dropdown des ustensiles
 const ingrDropdown = document.querySelector("#ingrDropdown"); //Zone de dropdown des ingrédients
