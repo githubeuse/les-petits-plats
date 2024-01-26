@@ -114,6 +114,11 @@ function search() { //TODO: fonction de recherche
         //     displayRecipes(filterRecord);
         // }
 
+        if (filterResults.length === 0) {
+            recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+            recipesSection.style.display = "flex";
+        } else {
+
         ingredientsRecord = []; //crée un tableau temporaire pour les ingredients
         ustensilsRecord = []; //crée un tableau temporaire pour les ustensiles
         appliancesRecord = []; // crée un tableau temporaire pour les appareils
@@ -138,12 +143,13 @@ function search() { //TODO: fonction de recherche
 
         console.table(filterRecord);
         console.table("filterResults ==>", filterResults);
-
-    } else if (filterResults.length === null) {
-        recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-        displayNumberTotalOfRecipes(filterRecord);
+        
     }
-}
+    // } else if (filterResults.length === null) {
+    //     recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+    //     displayNumberTotalOfRecipes(filterRecord);
+    // }
+}}
 
 async function displayRecipes(recipes) { //TODO: fonction pour afficher les recettes dans la section recettes
     recipes.forEach((recipe) => {
