@@ -32,6 +32,11 @@ const appTags = document.querySelector("#appTags"); // Zone de tag pour les appl
 
 const ustTags = document.querySelector("#ustTags"); // Zone de tag pour les ustensiles
 
+const selectedAppTagArray = [];
+const selectedUstTagArray = [];
+const selectedIngrTagArray = [];
+
+
 
 //TODO: fonction pour créér le tableau
 function init() {
@@ -119,37 +124,38 @@ function search() { //TODO: fonction de recherche
             recipesSection.style.display = "flex";
         } else {
 
-        ingredientsRecord = []; //crée un tableau temporaire pour les ingredients
-        ustensilsRecord = []; //crée un tableau temporaire pour les ustensiles
-        appliancesRecord = []; // crée un tableau temporaire pour les appareils
+            ingredientsRecord = []; //crée un tableau temporaire pour les ingredients
+            ustensilsRecord = []; //crée un tableau temporaire pour les ustensiles
+            appliancesRecord = []; // crée un tableau temporaire pour les appareils
 
 
-        setIngrRecord(filterRecord);
-        setUstRecord(filterRecord);
-        setApplRecord(filterRecord);
+            setIngrRecord(filterRecord);
+            setUstRecord(filterRecord);
+            setApplRecord(filterRecord);
 
 
-        ingrContents.innerHTML = ""; //vide le filtre contenant tous les ingrédients
-        displayIngr(ingredientsRecord); //et y affiche les ingredients en fonction de ???
+            ingrContents.innerHTML = ""; //vide le filtre contenant tous les ingrédients
+            displayIngr(ingredientsRecord); //et y affiche les ingredients en fonction de ???
 
-        ustContents.innerHTML = "";
-        displayUst(ustensilsRecord);
+            ustContents.innerHTML = "";
+            displayUst(ustensilsRecord);
 
-        applContents.innerHTML = "";
-        displayAppl(appliancesRecord);
+            applContents.innerHTML = "";
+            displayAppl(appliancesRecord);
 
-        displayNumberTotalOfRecipes(filterRecord);
-        displayRecipes(filterRecord);
+            displayNumberTotalOfRecipes(filterRecord);
+            displayRecipes(filterRecord);
 
-        console.table(filterRecord);
-        console.table("filterResults ==>", filterResults);
-        
+            console.table(filterRecord);
+            console.table("filterResults ==>", filterResults);
+
+        }
+        // } else if (filterResults.length === null) {
+        //     recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+        //     displayNumberTotalOfRecipes(filterRecord);
+        // }
     }
-    // } else if (filterResults.length === null) {
-    //     recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-    //     displayNumberTotalOfRecipes(filterRecord);
-    // }
-}}
+}
 
 async function displayRecipes(recipes) { //TODO: fonction pour afficher les recettes dans la section recettes
     recipes.forEach((recipe) => {
@@ -164,6 +170,7 @@ function clearRecipesSection() {
 }
 
 function setIngrRecord(recipes) { //TODO: fonction pour configurer les ingredients dans ingredientsRecord
+    ingredientsRecord = [];
     for (let recipe of recipes) { //pour chaque element du tableau recipes
         for (let ingr of recipe.ingredients) { //pour chaque élément temporaire de l'objet tableau inclus dans ingredients de recipes
             if (!ingredientsRecord.includes(ingr.ingredient.toLowerCase())) {// si le tableau ne contient pas l'ingredient
@@ -319,6 +326,14 @@ function filterApp() { //TODO: fonction pour filtrer les app
 
 // closeTag.setAttribute("class", "fas fa-times");
 
+// remove debut let selectedIngrTag;
+// let clickedIngr;
+// let clickedApp;
+// remove end let clickedUst;
+
+
+
+
 //Créer le tag ingredient
 ingrContents.addEventListener("click", function (event) {
     const clickedIngr = event.target.innerHTML;
@@ -331,24 +346,34 @@ ingrContents.addEventListener("click", function (event) {
         newTagIngr.setAttribute("class", "tag");
         newTagIngr.textContent = clickedIngr;
 
-        const closeTag = document.createElement("i");
+        selectedIngrTagArray.push(clickedIngr);
+
+        /*ADD*/ const /*ADD*/ closeTag = document.createElement("i");
         closeTag.setAttribute("class", "fas fa-times");
 
         newTagIngr.appendChild(closeTag);
+        console.log(filterRecord); //ADD
 
         closeTag.addEventListener("click", function () {
             newTagIngr.remove();
             recipesSection.innerHTML = "";
-            displayRecipes(recipes);
-        });
+            /* ADD */ // displayRecipes(recipes);
+            let index = selectedIngrTagArray.indexOf(clickedIngr);
+            selectedIngrTagArray.splice(index, 1);
+            console.log(selectedIngrTagArray);
 
+            /* ADD */  filterWithTag("", "ingr", false);
+
+
+
+        });
         ingrTags.appendChild(newTagIngr);
     }
 });
 
 //Créer le tag appareil
 applContents.addEventListener("click", function (event) {
-    const clickedApp = event.target.innerHTML;
+    /*ADD*/ const /*ADD*/ clickedApp = event.target.innerHTML;
 
     const existingTags = Array.from(appTags.getElementsByClassName("tag"));
     const tagExists = existingTags.some(tag => tag.textContent === clickedApp);
@@ -363,10 +388,11 @@ applContents.addEventListener("click", function (event) {
         closeTag.setAttribute("class", "fas fa-times");
 
         newTagApp.appendChild(closeTag);
+
         closeTag.addEventListener("click", function () {
             newTagApp.remove();
             recipesSection.innerHTML = "";
-            displayRecipes(recipes);
+            filterWithTag("", "appareil", false);
         });
 
         appTags.appendChild(newTagApp);
@@ -375,7 +401,7 @@ applContents.addEventListener("click", function (event) {
 
 //Créer le tag ustensile
 ustContents.addEventListener("click", function (event) {
-    const clickedUst = event.target.innerHTML;
+    /* ADD*/ const /*ADD */ clickedUst = event.target.innerHTML;
 
     const existingTags = Array.from(ustTags.getElementsByClassName("tag"));
     const tagExists = existingTags.some(tag => tag.textContent === clickedUst);
@@ -393,65 +419,120 @@ ustContents.addEventListener("click", function (event) {
         closeTag.addEventListener("click", function () {
             newTagUst.remove();
             recipesSection.innerHTML = "";
-            displayRecipes(recipes);
+            filterWithTag("", "ustensil", false);
+
+
         });
         ustTags.appendChild(newTagUst);
     }
 });
 
 const ustDropdown = document.querySelector("#ustDropdown"); //Zone de dropdown des ustensiles
-const ingrDropdown = document.querySelector("#ingrDropdown"); //Zone de dropdown des ingrédients
+
+/*ADD*/ const ingrDropdown = document.querySelector("#ingrDropdown"); //Zone de dropdown des ingrédients /* ADD */
+
 const appDropdown = document.querySelector("#appDropdown"); //Zone de dropdown des appareils
 
+// let selectedIngrTag;
 
 //tableau temporaire avec toutes les recettes
 //let filterRecord = [];
 //tableau avec resultats filtrés
 //let filterResults = [];
 
-
-
-
 // Fonction pour filtrer les recettes selon le tag INGREDIENTS
 ingrDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ingr
     //ingrDropdown.classList.remove("show");
-
-
     if (event.target.tagName == "BUTTON") {
         const selectedIngrTag = event.target.textContent.toLowerCase();
-        filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ingredients.some(ingr => ingr.ingredient.toLowerCase() === selectedIngrTag));
-        updateRecipes(filterRecord);
+        //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ingredients.some(ingr => ingr.ingredient.toLowerCase() === selectedIngrTag));
+        //updateRecipes(filterRecord);
+        filterWithTag(selectedIngrTag, "ingr", true)
         console.table("1", filterRecord);
     }
 });
 
-// Fonction pour filtrer les recettes selon le tag APPAREILS/APPLIANCES
-appDropdown.addEventListener("click", function (event) { // filtre en fonction du tag app
 
+// /*ADD*/ Fonction pour filtrer les recettes selon le tag APPAREILS/APPLIANCES
+appDropdown.addEventListener("click", function (event) { // filtre en fonction du tag app
     if (event.target.tagName == "BUTTON") {
         const selectedAppTag = event.target.textContent.toLowerCase();
-        filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.appliance.toLowerCase() === selectedAppTag);
-        updateRecipes(filterRecord);
+        //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.appliance.toLowerCase() === selectedAppTag);
+        //updateRecipes(filterRecord);
+        filterWithTag(selectedAppTag, "appareil", true)
         console.log("2", filterRecord);
     }
-});
-
-// applContents.innerHTML = "";
-// displayAppl(appliancesRecord);
-
-
+}); /*ADD*/
 
 //Fonction pour filtrer les recettes selon le tag USTENSILES
 ustDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ustensile
-
-
     if (event.target.tagName == "BUTTON") {
-        const selectedUstTag = event.target.textContent.toLowerCase();
-        filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ustensils.some(ust => ust.toLowerCase() === selectedUstTag));
-        updateRecipes(filterRecord);
+        /*ADD*/ const /*ADD*/ selectedUstTag = event.target.textContent.toLowerCase();
+        /*ADD*/filterWithTag(selectedUstTag, "ustensil", true);/*ADD*/
         console.log("3", filterRecord);
+
     }
 });
+
+/* ADD */ function filterWithTag(tag, type, add) {
+
+    let data = returnSearch(formSearch.value)
+    let result = []
+    console.log(selectedIngrTagArray);
+    switch (type) {
+        case "ingr":
+            data.forEach( item => {
+                selectedIngrTagArray.forEach(tagg => {
+                    item.ingredients.forEach(element => {
+                        if (element.ingredient.toLowerCase() === tagg) {
+                            if (!result.includes(item)) {
+                            result.push(item)
+                        }}
+                    })
+                })
+
+                //displayIngr(result)
+            })
+            if (result.length < 1) {
+                result = data;
+            }
+
+            setIngrRecord(result)
+
+            break;
+
+        case "appareil":
+            if (add) {
+                result = data.filter(item => item.appliance.toLowerCase() === tag.toLowerCase())
+                setApplRecord(result)
+                //displayAppl(result)
+            }
+            break;
+
+        case "ustensil":
+            if (add) {
+                data.forEach(item => {
+                    item.ustensils.forEach(element => {
+                        if (element.toLowerCase() === tag) {
+                            result.push(item)
+                        }
+                    })
+                });
+                setUstRecord(result)
+                //displayUst(result)
+            }
+            break;
+    }
+
+    recipesSection.innerHTML = "";
+
+    displayRecipes(result)
+
+
+} /*ADD*/
+
+
+
 
 
 function updateRecipes(updatedRecipes) { //TODO: fonction pour mettre à jour les recettes en fonction des tags
@@ -476,6 +557,8 @@ function updateRecipes(updatedRecipes) { //TODO: fonction pour mettre à jour le
 
 }
 
+
+
 displayRecipes(recipes);
 displayNumberTotalOfRecipes(recipes);
 
@@ -484,3 +567,28 @@ changeSideChevron();
 filterUst();
 filterIngr();
 filterApp();
+
+/*ADD DEBUT */ function returnSearch(word) {
+    let filterRecord = []
+    let filterResults = []
+
+    for (let singleDataRecord of dataRecord) {
+        if (singleDataRecord.label.toLowerCase().includes(formSearch.value.toLowerCase())) {
+            filterResults.push(singleDataRecord);
+        }
+    }
+
+    // de sorte à constituer un tableau avec uniquement des résultats filtré sans doublon
+    for (let singleFilterResult of filterResults) { // pour chaque élément des résultats filtrés dans filterResults
+        for (let singleRecipe of recipes) { // et pour chaque recette de recipes
+            if (singleRecipe.id === singleFilterResult.id) { // vérifie si les id correspond
+
+                if (!filterRecord.includes(singleRecipe)) {
+                    filterRecord.push(singleRecipe);
+                }
+            }
+        }
+    }
+    return filterRecord
+
+} /*ADD fin */
