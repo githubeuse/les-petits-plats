@@ -478,35 +478,54 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
 
     let data = returnSearch(formSearch.value)
     let result = []
-    console.log(selectedIngrTagArray);
+
+    console.log("TAG ARRAY", selectedIngrTagArray);
+    console.log("APPL ARRAY", selectedAppTagArray);
+
     switch (type) {
         case "ingr":
-            data.forEach( item => {
+            data.forEach(item => {
                 selectedIngrTagArray.forEach(tagg => {
                     item.ingredients.forEach(element => {
                         if (element.ingredient.toLowerCase() === tagg) {
                             if (!result.includes(item)) {
-                            result.push(item)
-                        }}
+                                result.push(item)
+                            }
+                        }
                     })
                 })
-
                 //displayIngr(result)
             })
             if (result.length < 1) {
                 result = data;
             }
-
             setIngrRecord(result)
 
             break;
 
         case "appareil":
-            if (add) {
-                result = data.filter(item => item.appliance.toLowerCase() === tag.toLowerCase())
-                setApplRecord(result)
-                //displayAppl(result)
+            // if (add) {
+            data.forEach(item => {
+                selectedAppTagArray.forEach(taggg => {
+                    if (item.toLowerCase() === taggg) {
+                        if (!result.includes(item)) {
+                            result.push(item);
+                        }
+                    }
+
+                })
+                // result = data.filter(item => item.appliance.toLowerCase() === tag.toLowerCase());
+            })
+
+            if (result.length < 1) {
+                result = data;
             }
+
+            setApplRecord(result);
+
+
+            //displayAppl(result)
+            // }
             break;
 
         case "ustensil":
