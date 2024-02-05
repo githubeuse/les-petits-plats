@@ -281,7 +281,6 @@ function changeSideChevron() { //TODO: fonction pour changer le sens du chevron 
 
 
 function filterUst() { // TODO: fonction pour filtrer les ustensiles
-
     ustInput.addEventListener("input", function () {
         const filteredUst = ustensilsRecord.filter(ustensile =>
             ustensile.toLowerCase().includes(ustInput.value.toLowerCase()));
@@ -354,17 +353,16 @@ ingrContents.addEventListener("click", function (event) {
         newTagIngr.appendChild(closeTag);
         console.log(filterRecord); //ADD
 
-        closeTag.addEventListener("click", function () {
-            newTagIngr.remove();
-            recipesSection.innerHTML = "";
+        closeTag.addEventListener("click", function () { // EVENEMENT : lorsqu'on clique sur le tag close des boutons ingrédients
+
+            newTagIngr.remove(); // on supprime le newTagIngr
+            recipesSection.innerHTML = ""; // on vide la section recipesSection
             /* ADD */ // displayRecipes(recipes);
-            let index = selectedIngrTagArray.indexOf(clickedIngr);
-            selectedIngrTagArray.splice(index, 1);
+            let index = selectedIngrTagArray.indexOf(clickedIngr); // index correspond à la valeur de l'index du tag qui vient d'être sélectionné
+            selectedIngrTagArray.splice(index, 1); // je supprime du tableau le tag sélectionné
             console.log(selectedIngrTagArray);
 
-            /* ADD */  filterWithTag("", "ingr", false);
-
-
+            /* ADD */  filterWithTag("", "ingr", false); // Appel de la fonction filterWithTag (tag, type, add) {
 
         });
         ingrTags.appendChild(newTagIngr);
@@ -379,10 +377,11 @@ applContents.addEventListener("click", function (event) {
     const tagExists = existingTags.some(tag => tag.textContent === clickedApp);
 
     if (!tagExists) {
-
         const newTagApp = document.createElement("button");
         newTagApp.setAttribute("class", "tag");
         newTagApp.textContent = clickedApp;
+
+        selectedAppTagArray.push(clickedApp);
 
         const closeTag = document.createElement("i");
         closeTag.setAttribute("class", "fas fa-times");
@@ -390,9 +389,15 @@ applContents.addEventListener("click", function (event) {
         newTagApp.appendChild(closeTag);
 
         closeTag.addEventListener("click", function () {
-            newTagApp.remove();
-            recipesSection.innerHTML = "";
-            filterWithTag("", "appareil", false);
+            newTagApp.remove(); // on supprime le noveau tag appliance 
+            recipesSection.innerHTML = ""; // on vide la section recipesSection
+            // filterWithTag("", "appareil", false);
+            let index = selectedAppTagArray.indexOf(clickedApp); // index correspond à la valeur de l'index du tag qui vient d'être sélectionné
+            selectedAppTagArray.splice(index, 1); // je supprime du tableau le tag sélectionné
+            console.log(selectedAppTagArray);
+
+            /* ADD */  filterWithTag("", "appareil", false); // Appel de la fonction filterWithTag (tag, type, add) {
+
         });
 
         appTags.appendChild(newTagApp);
@@ -412,14 +417,20 @@ ustContents.addEventListener("click", function (event) {
         newTagUst.setAttribute("class", "tag");
         newTagUst.textContent = clickedUst;
 
+        selectedUstTagArray.push(clickedUst);
+
         const closeTag = document.createElement("i");
         closeTag.setAttribute("class", "fas fa-times");
 
         newTagUst.appendChild(closeTag);
         closeTag.addEventListener("click", function () {
-            newTagUst.remove();
-            recipesSection.innerHTML = "";
-            filterWithTag("", "ustensil", false);
+            newTagUst.remove(); // on supprime le nouveau tag ustensile
+            recipesSection.innerHTML = "";// on vide la section recipesSection
+
+            let index = selectedUstTagArray.indexOf(clickedUst); // index correspond à la valeur de l'index du tag qui vient d'être sélectionné
+            selectedUstTagArray.splice(index, 1); // je supprime du tableau le tag sélectionné
+
+            filterWithTag("", "ustensil", false); // Appele de la fonction filterWithTag (tag, type, add) {
 
 
         });
@@ -481,6 +492,8 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
 
     console.log("TAG ARRAY", selectedIngrTagArray);
     console.log("APPL ARRAY", selectedAppTagArray);
+    console.log("UST ARRAY", selectedUstTagArray);
+    console.table("DATA", data);
 
     switch (type) {
         case "ingr":
@@ -502,19 +515,29 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
             setIngrRecord(result)
 
             break;
-
         case "appareil":
             // if (add) {
+            // data.forEach(item => {
+            //     selectedAppTagArray.forEach(element => {
+            //         if (element.appliance.toLowerCase() === item) {
+            //             if (!result.includes(item)) {
+            //                 result.push(item);
+            //             }
+            //         }
+
+            //     })
+            //     // result = data.filter(item => item.appliance.toLowerCase() === tag.toLowerCase());
+            // })
+
+            // Pour chacun des éléments de DATA
             data.forEach(item => {
-                selectedAppTagArray.forEach(taggg => {
-                    if (item.toLowerCase() === taggg) {
+                selectedAppTagArray.forEach(element => {
+                    if (element === item.appliance.toLowerCase()) {
                         if (!result.includes(item)) {
                             result.push(item);
                         }
                     }
-
                 })
-                // result = data.filter(item => item.appliance.toLowerCase() === tag.toLowerCase());
             })
 
             if (result.length < 1) {
@@ -529,24 +552,36 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
             break;
 
         case "ustensil":
-            if (add) {
-                data.forEach(item => {
-                    item.ustensils.forEach(element => {
-                        if (element.toLowerCase() === tag) {
-                            result.push(item)
+            // if (add) {
+            data.forEach(item => {
+                selectedUstTagArray.forEach(selectedUst => {
+                    item.ustensils.forEach(ustensil => {
+                        if (selectedUst.toLowerCase() === ustensil.toLowerCase()) {
+                            if (!result.includes(item)) {
+                                result.push(item)
+                            }
                         }
                     })
-                });
-                setUstRecord(result)
-                //displayUst(result)
+                })
+                //     })
+                //     // item.ustensils.forEach(element => {
+                //     // if (element === item.ustensils.toLowerCase()) {
+
+                //     }
+                // });
+            });
+
+            if (result.length < 1) {
+                result = data;
             }
+            setUstRecord(result);
+            //displayUst(result)
             break;
     }
 
     recipesSection.innerHTML = "";
 
     displayRecipes(result)
-
 
 } /*ADD*/
 
@@ -573,10 +608,7 @@ function updateRecipes(updatedRecipes) { //TODO: fonction pour mettre à jour le
     ingrDropdown.classList.remove("show");
     appDropdown.classList.remove("show");
     ustDropdown.classList.remove("show");
-
 }
-
-
 
 displayRecipes(recipes);
 displayNumberTotalOfRecipes(recipes);
