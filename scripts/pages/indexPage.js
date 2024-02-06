@@ -231,10 +231,16 @@ function displayAppl(appliances) { //TODO: fonction pour afficher les appareils 
         recipeModel.createFilterAppliances();
     })
 }
+const numberTotalRecipes = document.querySelector(".numberTotalRecipes");
 
 async function displayNumberTotalOfRecipes(recipes) { //TODO: fonction pour afficher le nombre total de recettes
-    const numberTotalRecipes = document.querySelector(".numberTotalRecipes");
     numberTotalRecipes.textContent = recipes.length;
+}
+
+let updatedTotal ;
+async function updateNumberTotalOfRecipes(updatedTotal) {
+    const numberTotalRecipes = document.querySelector(".numberTotalRecipes");
+    numberTotalRecipes.textContent = updatedTotal;
 }
 
 function changeSideChevron() { //TODO: fonction pour changer le sens du chevron lors du clic
@@ -344,6 +350,8 @@ ingrContents.addEventListener("click", function (event) {
         const newTagIngr = document.createElement("button");
         newTagIngr.setAttribute("class", "tag");
         newTagIngr.textContent = clickedIngr;
+        ingrDropdown.classList.remove("show");
+
 
         selectedIngrTagArray.push(clickedIngr);
 
@@ -380,6 +388,7 @@ applContents.addEventListener("click", function (event) {
         const newTagApp = document.createElement("button");
         newTagApp.setAttribute("class", "tag");
         newTagApp.textContent = clickedApp;
+        appDropdown.classList.remove("show");
 
         selectedAppTagArray.push(clickedApp);
 
@@ -416,6 +425,7 @@ ustContents.addEventListener("click", function (event) {
         const newTagUst = document.createElement("button");
         newTagUst.setAttribute("class", "tag");
         newTagUst.textContent = clickedUst;
+        ustDropdown.classList.remove("show");
 
         selectedUstTagArray.push(clickedUst);
 
@@ -458,7 +468,7 @@ ingrDropdown.addEventListener("click", function (event) { // filtre en fonction 
         const selectedIngrTag = event.target.textContent.toLowerCase();
         //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ingredients.some(ingr => ingr.ingredient.toLowerCase() === selectedIngrTag));
         //updateRecipes(filterRecord);
-        filterWithTag(selectedIngrTag, "ingr", true)
+        filterWithTag(selectedIngrTag, "ingr", true);
         console.table("1", filterRecord);
     }
 });
@@ -471,6 +481,7 @@ appDropdown.addEventListener("click", function (event) { // filtre en fonction d
         //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.appliance.toLowerCase() === selectedAppTag);
         //updateRecipes(filterRecord);
         filterWithTag(selectedAppTag, "appareil", true)
+        
         console.log("2", filterRecord);
     }
 }); /*ADD*/
@@ -512,8 +523,9 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
             if (result.length < 1) {
                 result = data;
             }
-            setIngrRecord(result)
-
+            setIngrRecord(result);
+            updatedTotal = result.length;
+            updateNumberTotalOfRecipes(updatedTotal);
             break;
         case "appareil":
             // if (add) {
@@ -545,6 +557,8 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
             }
 
             setApplRecord(result);
+            updatedTotal = result.length;
+            updateNumberTotalOfRecipes(updatedTotal);
 
 
             //displayAppl(result)
@@ -575,6 +589,9 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
                 result = data;
             }
             setUstRecord(result);
+            updatedTotal = result.length;
+            updateNumberTotalOfRecipes(updatedTotal);
+            
             //displayUst(result)
             break;
     }
