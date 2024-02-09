@@ -93,23 +93,25 @@ function search() { //TODO: fonction de recherche
 
         //verifie si l'input correspond à une data du tableau dataRecord
         //si oui l'ajoute à filterResults
-        for (let singleDataRecord of dataRecord) {
+        // for (let singleDataRecord of dataRecord) {
+        dataRecord.forEach(singleDataRecord => {
             if (singleDataRecord.label.toLowerCase().includes(formSearch.value.toLowerCase())) {
                 filterResults.push(singleDataRecord);
             }
-        }
+        });
 
         // de sorte à constituer un tableau avec uniquement des résultats filtré sans doublon
-        for (let singleFilterResult of filterResults) { // pour chaque élément des résultats filtrés dans filterResults
-            for (let singleRecipe of recipes) { // et pour chaque recette de recipes
+        filterResults.forEach(singleFilterResult => {
+            // for (let singleRecipe of recipes) { // et pour chaque recette de recipes
+            recipes.forEach(singleRecipe => {
                 if (singleRecipe.id === singleFilterResult.id) { // vérifie si les id correspond
 
                     if (!filterRecord.includes(singleRecipe)) {
                         filterRecord.push(singleRecipe);
                     }
                 }
-            }
-        }
+            });
+        });
 
         // if (filterResults.length === 0) {
         //     recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
@@ -237,7 +239,7 @@ async function displayNumberTotalOfRecipes(recipes) { //TODO: fonction pour affi
     numberTotalRecipes.textContent = recipes.length;
 }
 
-let updatedTotal ;
+let updatedTotal;
 async function updateNumberTotalOfRecipes(updatedTotal) {
     const numberTotalRecipes = document.querySelector(".numberTotalRecipes");
     numberTotalRecipes.textContent = updatedTotal;
@@ -481,7 +483,7 @@ appDropdown.addEventListener("click", function (event) { // filtre en fonction d
         //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.appliance.toLowerCase() === selectedAppTag);
         //updateRecipes(filterRecord);
         filterWithTag(selectedAppTag, "appareil", true)
-        
+
         console.log("2", filterRecord);
     }
 }); /*ADD*/
@@ -591,7 +593,7 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
             setUstRecord(result);
             updatedTotal = result.length;
             updateNumberTotalOfRecipes(updatedTotal);
-            
+
             //displayUst(result)
             break;
     }
