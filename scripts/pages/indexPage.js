@@ -91,16 +91,6 @@ function search() { //TODO: fonction de recherche
         //vide la section des resultats
         recipesSection.innerHTML = "";
 
-        /* ​‌‌‍⁡⁢⁣⁢BOUCLE​ #1 */
-
-        //​‌‌‍⁡⁣⁢⁢VARIABLES⁡​
-        // let singleDataLabelLower = singleDataRecord.label.toLowerCase(); // création d'une variable pour la propriété label de chaque element du tableau dataRecord => passé en minuscule
-        // let searchLower = formSearch.value.toLowerCase(); // valeur du input => en minuscule
-
-        //⁡⁢⁢⁣​‌‌‍FLAG​⁡
-        let doublon = false; // flag pour indiquer si on trouve une correspondance  
-
-        // ⁡⁢⁣⁣​‌‌‍CONDITION #2 => Si labelLower commence par searchLower 
         for (let singleDataRecord of dataRecord) { //boucle dans le tableau qui contient toutes les données​⁡
             let result = singleDataRecord.label.toLowerCase().indexOf(formSearch.value.toLowerCase());
             if (result !== -1) { // si singleDataLabelLower commence par searchLower
@@ -156,10 +146,6 @@ function search() { //TODO: fonction de recherche
             console.table("filterResults ==>", filterResults);
 
         }
-        // } else if (filterResults.length === null) {
-        //     recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-        //     displayNumberTotalOfRecipes(filterRecord);
-        // }
     }
 }
 
