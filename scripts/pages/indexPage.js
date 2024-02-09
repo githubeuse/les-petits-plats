@@ -38,7 +38,7 @@ const selectedIngrTagArray = [];
 
 
 
-//TODO: fonction pour créér le tableau
+//TODO: fonction pour créér le tableau dataRecord
 function init() {
     for (let recipe of recipes) {
         dataRecord.push({ // nom de recette
@@ -82,8 +82,8 @@ let filterResults = [];
 function search() { //TODO: fonction de recherche
     //vide la section des resultats
     recipesSection.innerHTML = "";
-    filterResults = [];
-    filterRecord = [];
+    filterResults = []; //
+    filterRecord = []; // 
 
     //si l'U entre + de 2 caractères
     if (formSearch.value.length > 2) {
@@ -91,76 +91,78 @@ function search() { //TODO: fonction de recherche
         //vide la section des resultats
         recipesSection.innerHTML = "";
 
-        /*​‌‌‍⁡⁢⁣⁢BOUCLE​ #1*/ for (let singleDataRecord of dataRecord) { //je boucle dans dataRecord // pour chaque élément du tableau dataRecord
+        /* ​‌‌‍⁡⁢⁣⁢BOUCLE​ #1 */
 
-            //​‌‌‍⁡⁣⁢⁢VARIABLES⁡​
-            let labelLower = singleDataRecord.label.toLowerCase(); // création d'une variable pour la propriété label de chaque element du tableau dataRecord => passé en minuscule
-            let searchLower = formSearch.value.toLowerCase(); // valeur du input => en minuscule
+        //​‌‌‍⁡⁣⁢⁢VARIABLES⁡​
+        // let singleDataLabelLower = singleDataRecord.label.toLowerCase(); // création d'une variable pour la propriété label de chaque element du tableau dataRecord => passé en minuscule
+        // let searchLower = formSearch.value.toLowerCase(); // valeur du input => en minuscule
 
-            //⁡⁢⁢⁣​‌‌‍FLAG​⁡
-            let doublon = false; // flag pour indiquer si on trouve une correspondance  
+        //⁡⁢⁢⁣​‌‌‍FLAG​⁡
+        let doublon = false; // flag pour indiquer si on trouve une correspondance  
 
-            console.log("dataREcord", dataRecord);
-            // ⁡⁢⁣⁣​‌‌‍CONDITION #2 => Si labelLower commence par searchLower ​⁡
-            if (labelLower.includes(searchLower)) { // si labelLower commence par searchLower
-                doublon = true; // flag doublon passe à true
-                console.log("labelLower", labelLower);
-                break; // Sort de la boucle si une correspondance est trouvée
+        // ⁡⁢⁣⁣​‌‌‍CONDITION #2 => Si labelLower commence par searchLower 
+        for (let singleDataRecord of dataRecord) { //boucle dans le tableau qui contient toutes les données​⁡
+            let result = singleDataRecord.label.toLowerCase().indexOf(formSearch.value.toLowerCase());
+            if (result !== -1) { // si singleDataLabelLower commence par searchLower
+                filterResults.push(singleDataRecord); // on ajoute l'élément à filterResults
+                console.log("j'ajoute la data" + singleDataRecord.label + "au tableau filterResults");
             }
-            // ⁡⁢⁣⁣​‌‌​‌‌‍‍CONDITION #3 => Si doublon est false ⁡​
-            if (!doublon) {  // s'il n'y a pas de doublon
-                let exist = false; // doit vérifier si existe
-                for (let singleFilterResult of filterResults) { // pour chaque élément des résultats filtrés dans filterResults
-                    //
-                    if (singleDataRecord.id === singleFilterResult.id) {
-                        exist = true;
-                        break
+
+            for (let singleFilterResult of filterResults) { // pour chaque élément des résultats filtrés dans filterResults
+                for (let singleRecipe of recipes) { // et pour chaque recette de recipes
+                    if (singleRecipe.id === singleFilterResult.id) { // vérifie si les id correspond
+                        let doublon = false;
+                        for (let i = 0; i < filterRecord.length; i++) {
+                            if (filterRecord[i].id === singleRecipe.id) {
+                                doublon = true;
+                                break;
+                            }
+                        }
+                        if (!doublon) {
+                            filterRecord.push(singleRecipe);
+                        }
                     }
                 }
-                if (!exist) {//cette ligne n'est pas exécutée 
-                    filterResults.push(singleDataRecord); // on ajoute l'élément à filterResults
-
-                }
             }
-
-            if (filterResults.length === 0) {
-                recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-                recipesSection.style.display = "flex";
-            } else {
-
-                ingredientsRecord = []; //crée un tableau temporaire pour les ingredients
-                ustensilsRecord = []; //crée un tableau temporaire pour les ustensiles
-                appliancesRecord = []; // crée un tableau temporaire pour les appareils
-
-
-                setIngrRecord(filterRecord);
-                setUstRecord(filterRecord);
-                setApplRecord(filterRecord);
-
-
-                ingrContents.innerHTML = ""; //vide le filtre contenant tous les ingrédients
-                displayIngr(ingredientsRecord); //et y affiche les ingredients en fonction de ???
-
-                ustContents.innerHTML = "";
-                displayUst(ustensilsRecord);
-
-                applContents.innerHTML = "";
-                displayAppl(appliancesRecord);
-
-                displayNumberTotalOfRecipes(filterRecord);
-                displayRecipes(filterRecord);
-
-                console.table(filterRecord);
-                console.table("filterResults ==>", filterResults);
-
-            }
-            // } else if (filterResults.length === null) {
-            //     recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-            //     displayNumberTotalOfRecipes(filterRecord);
-            // }
         }
+        if (filterResults.length === 0) {
+            recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+            recipesSection.style.display = "flex";
+        } else {
+
+            ingredientsRecord = []; //crée un tableau temporaire pour les ingredients
+            ustensilsRecord = []; //crée un tableau temporaire pour les ustensiles
+            appliancesRecord = []; // crée un tableau temporaire pour les appareils
+
+
+            setIngrRecord(filterRecord);
+            setUstRecord(filterRecord);
+            setApplRecord(filterRecord);
+
+
+            ingrContents.innerHTML = ""; //vide le filtre contenant tous les ingrédients
+            displayIngr(ingredientsRecord); //et y affiche les ingredients en fonction de ???
+
+            ustContents.innerHTML = "";
+            displayUst(ustensilsRecord);
+
+            applContents.innerHTML = "";
+            displayAppl(appliancesRecord);
+
+            displayNumberTotalOfRecipes(filterRecord);
+            displayRecipes(filterRecord);
+
+            console.table(filterRecord);
+            console.table("filterResults ==>", filterResults);
+
+        }
+        // } else if (filterResults.length === null) {
+        //     recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+        //     displayNumberTotalOfRecipes(filterRecord);
+        // }
     }
 }
+
 
 async function displayRecipes(recipes) { //TODO: fonction pour afficher les recettes dans la section recettes
     recipes.forEach((recipe) => {
