@@ -329,7 +329,7 @@ ingrContents.addEventListener("click", function (event) {
 
         selectedIngrTagArray.push(clickedIngr);
 
-        /*ADD*/ const /*ADD*/ closeTag = document.createElement("i");
+        const closeTag = document.createElement("i");
         closeTag.setAttribute("class", "fas fa-times");
 
         newTagIngr.appendChild(closeTag);
@@ -339,12 +339,11 @@ ingrContents.addEventListener("click", function (event) {
 
             newTagIngr.remove(); // on supprime le newTagIngr
             recipesSection.innerHTML = ""; // on vide la section recipesSection
-            /* ADD */ // displayRecipes(recipes);
             let index = selectedIngrTagArray.indexOf(clickedIngr); // index correspond à la valeur de l'index du tag qui vient d'être sélectionné
             selectedIngrTagArray.splice(index, 1); // je supprime du tableau le tag sélectionné
             console.log(selectedIngrTagArray);
 
-            /* ADD */  filterWithTag("", "ingr", false); // Appel de la fonction filterWithTag (tag, type, add) {
+            filterWithTag("", "ingr", false); // Appel de la fonction filterWithTag (tag, type, add) {
 
         });
         ingrTags.appendChild(newTagIngr);
@@ -353,7 +352,7 @@ ingrContents.addEventListener("click", function (event) {
 
 //Créer le tag appareil
 applContents.addEventListener("click", function (event) {
-    /*ADD*/ const /*ADD*/ clickedApp = event.target.innerHTML;
+    const clickedApp = event.target.innerHTML;
 
     const existingTags = Array.from(appTags.getElementsByClassName("tag"));
     const tagExists = existingTags.some(tag => tag.textContent === clickedApp);
@@ -374,12 +373,11 @@ applContents.addEventListener("click", function (event) {
         closeTag.addEventListener("click", function () {
             newTagApp.remove(); // on supprime le noveau tag appliance 
             recipesSection.innerHTML = ""; // on vide la section recipesSection
-            // filterWithTag("", "appareil", false);
             let index = selectedAppTagArray.indexOf(clickedApp); // index correspond à la valeur de l'index du tag qui vient d'être sélectionné
             selectedAppTagArray.splice(index, 1); // je supprime du tableau le tag sélectionné
             console.log(selectedAppTagArray);
 
-            /* ADD */  filterWithTag("", "appareil", false); // Appel de la fonction filterWithTag (tag, type, add) {
+            filterWithTag("", "appareil", false); // Appel de la fonction filterWithTag (tag, type, add) {
 
         });
 
@@ -389,7 +387,7 @@ applContents.addEventListener("click", function (event) {
 
 //Créer le tag ustensile
 ustContents.addEventListener("click", function (event) {
-    /* ADD*/ const /*ADD */ clickedUst = event.target.innerHTML;
+    const clickedUst = event.target.innerHTML;
 
     const existingTags = Array.from(ustTags.getElementsByClassName("tag"));
     const tagExists = existingTags.some(tag => tag.textContent === clickedUst);
@@ -429,11 +427,8 @@ const appDropdown = document.querySelector("#appDropdown"); //Zone de dropdown d
 
 // Fonction pour filtrer les recettes selon le tag INGREDIENTS
 ingrDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ingr
-    //ingrDropdown.classList.remove("show");
     if (event.target.tagName == "BUTTON") {
         const selectedIngrTag = event.target.textContent.toLowerCase();
-        //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ingredients.some(ingr => ingr.ingredient.toLowerCase() === selectedIngrTag));
-        //updateRecipes(filterRecord);
         filterWithTag(selectedIngrTag, "ingr", true);
         console.table("1", filterRecord);
     }
@@ -444,8 +439,6 @@ ingrDropdown.addEventListener("click", function (event) { // filtre en fonction 
 appDropdown.addEventListener("click", function (event) { // filtre en fonction du tag app
     if (event.target.tagName == "BUTTON") {
         const selectedAppTag = event.target.textContent.toLowerCase();
-        //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.appliance.toLowerCase() === selectedAppTag);
-        //updateRecipes(filterRecord);
         filterWithTag(selectedAppTag, "appareil", true)
 
         console.log("2", filterRecord);
@@ -455,8 +448,8 @@ appDropdown.addEventListener("click", function (event) { // filtre en fonction d
 //Fonction pour filtrer les recettes selon le tag USTENSILES
 ustDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ustensile
     if (event.target.tagName == "BUTTON") {
-        /*ADD*/ const /*ADD*/ selectedUstTag = event.target.textContent.toLowerCase();
-        /*ADD*/filterWithTag(selectedUstTag, "ustensil", true);/*ADD*/
+        const selectedUstTag = event.target.textContent.toLowerCase();
+        filterWithTag(selectedUstTag, "ustensil", true);/*ADD*/
         console.log("3", filterRecord);
 
     }
@@ -485,7 +478,6 @@ function filterWithTag(tag, type, add) {
                         }
                     })
                 })
-                //displayIngr(result)
             })
             if (result.length < 1) {
                 result = data;
@@ -496,20 +488,6 @@ function filterWithTag(tag, type, add) {
             break;
 
         case "appareil": // si le type est appareil
-            // if (add) {
-            // data.forEach(item => {
-            //     selectedAppTagArray.forEach(element => {
-            //         if (element.appliance.toLowerCase() === item) {
-            //             if (!result.includes(item)) {
-            //                 result.push(item);
-            //             }
-            //         }
-
-            //     })
-            //     // result = data.filter(item => item.appliance.toLowerCase() === tag.toLowerCase());
-            // })
-
-            // Pour chacun des éléments de DATA
             data.forEach(item => {
                 selectedAppTagArray.forEach(element => {
                     if (element === item.appliance.toLowerCase()) {
@@ -529,12 +507,9 @@ function filterWithTag(tag, type, add) {
             updateNumberTotalOfRecipes(updatedTotal);
 
 
-            //displayAppl(result)
-            // }
             break;
 
         case "ustensil": // si le type est ustensile
-            // if (add) {
             data.forEach(item => {
                 selectedUstTagArray.forEach(selectedUst => {
                     item.ustensils.forEach(ustensil => {
@@ -545,12 +520,6 @@ function filterWithTag(tag, type, add) {
                         }
                     })
                 })
-                //     })
-                //     // item.ustensils.forEach(element => {
-                //     // if (element === item.ustensils.toLowerCase()) {
-
-                //     }
-                // });
             });
 
             if (result.length < 1) {
@@ -560,7 +529,6 @@ function filterWithTag(tag, type, add) {
             updatedTotal = result.length;
             updateNumberTotalOfRecipes(updatedTotal);
 
-            //displayUst(result)
             break;
     }
 
