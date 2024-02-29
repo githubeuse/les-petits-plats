@@ -7,21 +7,14 @@ let formSearch = document.querySelector("#formSearch"); //formulaire de recherch
 let dataRecord = []; //tableau avec toutes les recettes, ingredients, ustensiles
 
 let ingredientsRecord = []; //tableau avec tous les ingredients
-
 let ustensilsRecord = []; //tableau avec tous les ustensiles
-
 let appliancesRecord = []; //tableau avec tous les appareils
 
 const recipesSection = document.querySelector(".recipes-section"); //Section contenant les recettes
 
 const ingrContents = document.querySelector("#ingrContents"); //Filtre contenant les ingrédients
-
-
 const ustContents = document.querySelector("#ustContents"); //Filtre contenant les ustenstiles
-
-
 const applContents = document.querySelector("#applContents"); //Filtre contenant les appareils
-
 
 //TODO: fonction pour créér le tableau
 function init() {
@@ -100,20 +93,19 @@ function search() { //TODO: fonction de recherche
         appliancesRecord = []; // crée un tableau temporaire pour les appareils
 
 
-        setIngrRecord(filterRecord);
-        setUstRecord(filterRecord);
-        setApplRecord(filterRecord);
+        setIngrRecord(filterRecord); //configure les ingredients à partir du tableau filterRecord
+        setUstRecord(filterRecord); //configure les ustensiles à partir du tableau filterRecord
+        setApplRecord(filterRecord); //configure les appareils à partir du tableau filterRecord
 
 
         ingrContents.innerHTML = ""; //vide le filtre contenant tous les ingrédients
-        displayIngr(ingredientsRecord); //et y affiche les ingredients en fonction de ???
+        displayIngr(ingredientsRecord); //affiche les ingrédients dans le filtre
 
-        ustContents.innerHTML = "";
-        displayUst(ustensilsRecord);
+        ustContents.innerHTML = ""; //vide le filtre contenant tous les ustensiles
+        displayUst(ustensilsRecord); //affiche les ustensiles dans le filtre
 
-        applContents.innerHTML = "";
-        displayAppl(appliancesRecord);
-
+        applContents.innerHTML = ""; //vide le filtre contenant tous les appareils
+        displayAppl(appliancesRecord); //affiche les appareils dans le filtre
 
     }
 }
@@ -137,7 +129,7 @@ function setIngrRecord(recipes) { //TODO: fonction pour configurer les ingredien
     };
 }
 
-function setUstRecord(recipes) { //TODO: fonction pour configurer les ustensiles en minuscules        
+function setUstRecord(recipes) { //fonction pour configurer les ustensiles en minuscules et les ajouter à ustensilsRecord       
     for (let recipe of recipes) { // OK
             for (let ust of recipe.ustensils) {
                 let ustensilLower = ust.toLowerCase();
@@ -150,8 +142,7 @@ function setUstRecord(recipes) { //TODO: fonction pour configurer les ustensiles
     //console.log(ustensilsRecord);
 }
 
-function setApplRecord(recipes) {
-
+function setApplRecord(recipes) { //fonction pour configurer les appareils en minuscules et les ajouter à appliancesRecord
     for (let recipe of recipes) {
         if (!appliancesRecord.includes(recipe.appliance.toLowerCase())) {
             appliancesRecord.push(recipe.appliance.toLowerCase());
@@ -159,14 +150,14 @@ function setApplRecord(recipes) {
     }
 }
 
-function displayIngr(ingredients) { //TODO: fonction pour afficher les ingredients dans le filtre ingredients
+function displayIngr(ingredients) { //fonction pour afficher les ingredients dans le filtre
     ingredients.forEach((ingredient) => {
         const recipeModel = recipeTemplate(null, ingredient, null, null);
         recipeModel.createFilterIngredients();
     })
 }
 
-function displayUst(ustensiles) {
+function displayUst(ustensiles) { //fonction pour afficher les ustensiles dans le filtre
     ustensiles.forEach((ustensile) => {
         //console.log(ustensile);
         const recipeModel = recipeTemplate(null, null, ustensile, null);
@@ -174,19 +165,19 @@ function displayUst(ustensiles) {
     })
 }
 
-function displayAppl(appliances) {
+function displayAppl(appliances) { //fonction pour afficher les appareils dans le filtre
     appliances.forEach((appliance) => {
         const recipeModel = recipeTemplate(null, null, null, appliance);
         recipeModel.createFilterAppliances();
     })
 }
 
-async function displayNumberTotalOfRecipes(recipes) {
+async function displayNumberTotalOfRecipes(recipes) { //fonction pour afficher le nombre total de recettes
     const numberTotalRecipes = document.querySelector(".numberTotalRecipes");
     numberTotalRecipes.textContent = recipes.length;
 }
 
-function changeSideChevron(){
+function changeSideChevron(){ //fonction pour changer le sens du chevron du filtre ingrédients
     const chevronUp = document.querySelector("#chevron1");
     const ingrBtn = document.querySelector("#ingrBtn");
     ingrBtn.addEventListener("click", () => {
