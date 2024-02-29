@@ -29,7 +29,6 @@ const selectedUstTagArray = [];
 const selectedIngrTagArray = [];
 
 
-
 // fonction pour créér le tableau dataRecord
 function init() {
     for (let recipe of recipes) {
@@ -280,9 +279,7 @@ function changeSideChevron() { //fonction pour changer le sens du chevron lors d
     });
 }
 
-
-
-
+//  fonction pour filtrer les recettes
 function filterUst() { //  fonction pour filtrer les ustensiles
     ustInput.addEventListener("input", function () {
         const filteredUst = ustensilsRecord.filter(ustensile =>
@@ -296,6 +293,7 @@ function filterUst() { //  fonction pour filtrer les ustensiles
     });
 }
 
+//  fonction pour filtrer les recettes
 function filterIngr() { //fonction pour filtrer les ingrédients
 
     ingrInput.addEventListener("input", function () {
@@ -312,6 +310,7 @@ function filterIngr() { //fonction pour filtrer les ingrédients
     });
 }
 
+//  fonction pour filtrer les recettes
 function filterApp() { //fonction pour filtrer les app
 
     appInput.addEventListener("input", function () {
@@ -325,16 +324,6 @@ function filterApp() { //fonction pour filtrer les app
         })
     });
 }
-
-// closeTag.setAttribute("class", "fas fa-times");
-
-// remove debut let selectedIngrTag;
-// let clickedIngr;
-// let clickedApp;
-// remove end let clickedUst;
-
-
-
 
 //Créer le tag ingredient
 ingrContents.addEventListener("click", function (event) {
@@ -352,7 +341,7 @@ ingrContents.addEventListener("click", function (event) {
 
         selectedIngrTagArray.push(clickedIngr);
 
-        /*ADD*/ const /*ADD*/ closeTag = document.createElement("i");
+        const closeTag = document.createElement("i");
         closeTag.setAttribute("class", "fas fa-times");
 
         newTagIngr.appendChild(closeTag);
@@ -362,12 +351,12 @@ ingrContents.addEventListener("click", function (event) {
 
             newTagIngr.remove(); // on supprime le newTagIngr
             recipesSection.innerHTML = ""; // on vide la section recipesSection
-            /* ADD */ // displayRecipes(recipes);
+        
             let index = selectedIngrTagArray.indexOf(clickedIngr); // index correspond à la valeur de l'index du tag qui vient d'être sélectionné
             selectedIngrTagArray.splice(index, 1); // je supprime du tableau le tag sélectionné
             console.log(selectedIngrTagArray);
 
-            /* ADD */  filterWithTag("", "ingr", false); // Appel de la fonction filterWithTag (tag, type, add) {
+           filterWithTag("", "ingr", false); // Appel de la fonction filterWithTag (tag, type, add) {
 
         });
         ingrTags.appendChild(newTagIngr);
@@ -376,7 +365,7 @@ ingrContents.addEventListener("click", function (event) {
 
 //Créer le tag appareil
 applContents.addEventListener("click", function (event) {
-    /*ADD*/ const /*ADD*/ clickedApp = event.target.innerHTML;
+    const clickedApp = event.target.innerHTML;
 
     const existingTags = Array.from(appTags.getElementsByClassName("tag"));
     const tagExists = existingTags.some(tag => tag.textContent === clickedApp);
@@ -397,12 +386,11 @@ applContents.addEventListener("click", function (event) {
         closeTag.addEventListener("click", function () {
             newTagApp.remove(); // on supprime le noveau tag appliance 
             recipesSection.innerHTML = ""; // on vide la section recipesSection
-            // filterWithTag("", "appareil", false);
             let index = selectedAppTagArray.indexOf(clickedApp); // index correspond à la valeur de l'index du tag qui vient d'être sélectionné
             selectedAppTagArray.splice(index, 1); // je supprime du tableau le tag sélectionné
             console.log(selectedAppTagArray);
 
-            /* ADD */  filterWithTag("", "appareil", false); // Appel de la fonction filterWithTag (tag, type, add) {
+            filterWithTag("", "appareil", false); // Appel de la fonction filterWithTag (tag, type, add) {
 
         });
 
@@ -412,7 +400,7 @@ applContents.addEventListener("click", function (event) {
 
 //Créer le tag ustensile
 ustContents.addEventListener("click", function (event) {
-    /* ADD*/ const /*ADD */ clickedUst = event.target.innerHTML;
+    const clickedUst = event.target.innerHTML;
 
     const existingTags = Array.from(ustTags.getElementsByClassName("tag"));
     const tagExists = existingTags.some(tag => tag.textContent === clickedUst);
@@ -447,53 +435,41 @@ ustContents.addEventListener("click", function (event) {
 
 const ustDropdown = document.querySelector("#ustDropdown"); //Zone de dropdown des ustensiles
 
-/*ADD*/ const ingrDropdown = document.querySelector("#ingrDropdown"); //Zone de dropdown des ingrédients /* ADD */
+const ingrDropdown = document.querySelector("#ingrDropdown"); //Zone de dropdown des ingrédients /* ADD */
 
 const appDropdown = document.querySelector("#appDropdown"); //Zone de dropdown des appareils
 
-// let selectedIngrTag;
-
-//tableau temporaire avec toutes les recettes
-//let filterRecord = [];
-//tableau avec resultats filtrés
-//let filterResults = [];
 
 // Fonction pour filtrer les recettes selon le tag INGREDIENTS
 ingrDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ingr
-    //ingrDropdown.classList.remove("show");
     if (event.target.tagName == "BUTTON") {
         const selectedIngrTag = event.target.textContent.toLowerCase();
-        //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.ingredients.some(ingr => ingr.ingredient.toLowerCase() === selectedIngrTag));
-        //updateRecipes(filterRecord);
         filterWithTag(selectedIngrTag, "ingr", true);
         console.table("1", filterRecord);
     }
 });
 
 
-// /*ADD*/ Fonction pour filtrer les recettes selon le tag APPAREILS/APPLIANCES
+//  Fonction pour filtrer les recettes selon le tag APPAREILS/APPLIANCES
 appDropdown.addEventListener("click", function (event) { // filtre en fonction du tag app
     if (event.target.tagName == "BUTTON") {
         const selectedAppTag = event.target.textContent.toLowerCase();
-        //filterRecord = filterRecord.filter(singleFilterRecord => singleFilterRecord.appliance.toLowerCase() === selectedAppTag);
-        //updateRecipes(filterRecord);
         filterWithTag(selectedAppTag, "appareil", true)
-
         console.log("2", filterRecord);
     }
-}); /*ADD*/
+}); 
 
 //Fonction pour filtrer les recettes selon le tag USTENSILES
 ustDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ustensile
     if (event.target.tagName == "BUTTON") {
-        /*ADD*/ const /*ADD*/ selectedUstTag = event.target.textContent.toLowerCase();
-        /*ADD*/filterWithTag(selectedUstTag, "ustensil", true);/*ADD*/
+        const selectedUstTag = event.target.textContent.toLowerCase();
+        filterWithTag(selectedUstTag, "ustensil", true);
         console.log("3", filterRecord);
 
     }
 });
 
-/* ADD */ function filterWithTag(tag, type, add) {
+function filterWithTag(tag, type, add) {
 
     let data = returnSearch(formSearch.value)
     let result = []
@@ -515,7 +491,6 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
                         }
                     })
                 })
-                //displayIngr(result)
             })
             if (result.length < 1) {
                 result = data;
@@ -525,20 +500,8 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
             updateNumberTotalOfRecipes(updatedTotal);
             break;
         case "appareil":
-            // if (add) {
-            // data.forEach(item => {
-            //     selectedAppTagArray.forEach(element => {
-            //         if (element.appliance.toLowerCase() === item) {
-            //             if (!result.includes(item)) {
-            //                 result.push(item);
-            //             }
-            //         }
 
-            //     })
-            //     // result = data.filter(item => item.appliance.toLowerCase() === tag.toLowerCase());
-            // })
-
-            // Pour chacun des éléments de DATA
+        // Pour chacun des éléments de DATA
             data.forEach(item => {
                 selectedAppTagArray.forEach(element => {
                     if (element === item.appliance.toLowerCase()) {
@@ -558,12 +521,10 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
             updateNumberTotalOfRecipes(updatedTotal);
 
 
-            //displayAppl(result)
             // }
             break;
 
         case "ustensil":
-            // if (add) {
             data.forEach(item => {
                 selectedUstTagArray.forEach(selectedUst => {
                     item.ustensils.forEach(ustensil => {
@@ -574,12 +535,6 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
                         }
                     })
                 })
-                //     })
-                //     // item.ustensils.forEach(element => {
-                //     // if (element === item.ustensils.toLowerCase()) {
-
-                //     }
-                // });
             });
 
             if (result.length < 1) {
@@ -589,7 +544,6 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
             updatedTotal = result.length;
             updateNumberTotalOfRecipes(updatedTotal);
 
-            //displayUst(result)
             break;
     }
 
@@ -597,10 +551,7 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
 
     displayRecipes(result)
 
-} /*ADD*/
-
-
-
+} 
 
 
 function updateRecipes(updatedRecipes) { //fonction pour mettre à jour les recettes en fonction des tags
@@ -633,7 +584,7 @@ filterUst();
 filterIngr();
 filterApp();
 
-/*ADD DEBUT */ function returnSearch(word) {
+function returnSearch(word) {
     let filterRecord = []
     let filterResults = []
 
@@ -656,4 +607,4 @@ filterApp();
     }
     return filterRecord
 
-} /*ADD fin */
+}
