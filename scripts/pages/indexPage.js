@@ -7,29 +7,21 @@ let formSearch = document.querySelector("#formSearch"); //formulaire de recherch
 let dataRecord = []; //tableau avec toutes les recettes, ingredients, ustensiles
 
 let ingredientsRecord = []; //tableau avec tous les ingredients
-
 let ustensilsRecord = []; //tableau avec tous les ustensiles
-
 let appliancesRecord = []; //tableau avec tous les appareils
 
 const recipesSection = document.querySelector(".recipes-section"); //Section contenant les recettes
 
 const ingrContents = document.querySelector("#ingrContents"); //Filtre contenant les tags ingrédients
-
 const ustContents = document.querySelector("#ustContents"); //Filtre contenant les tags ustenstiles
-
 const applContents = document.querySelector("#applContents"); //Filtre contenant les tags appareils
 
-const ingrInput = document.querySelector("#ingrInput"); // Input des ingrédients (rech filtrée)
-
+const ingrInput = document.querySelector("#ingrInput"); // Input des ingrédients (rech filtrée
 const appInput = document.querySelector("#appInput"); // Input des appareils/appliances
-
 const ustInput = document.querySelector("#ustInput"); // Input des ustensiles
 
 const ingrTags = document.querySelector("#ingrTags"); // Zone de tag pour les ingrédients
-
 const appTags = document.querySelector("#appTags"); // Zone de tag pour les appliances/appareils
-
 const ustTags = document.querySelector("#ustTags"); // Zone de tag pour les ustensiles
 
 const selectedAppTagArray = [];
@@ -38,7 +30,7 @@ const selectedIngrTagArray = [];
 
 
 
-//TODO: fonction pour créér le tableau dataRecord
+// fonction pour créér le tableau dataRecord
 function init() {
     for (let recipe of recipes) {
         dataRecord.push({ // nom de recette
@@ -79,7 +71,7 @@ let filterRecord = [];
 //tableau avec resultats filtrés
 let filterResults = [];
 
-function search() { //TODO: fonction de recherche
+function search() { //fonction de recherche
     //vide la section des resultats
     recipesSection.innerHTML = "";
     filterResults = []; //
@@ -150,7 +142,7 @@ function search() { //TODO: fonction de recherche
 }
 
 
-async function displayRecipes(recipes) { //TODO: fonction pour afficher les recettes dans la section recettes
+async function displayRecipes(recipes) { //fonction pour afficher les recettes dans la section recettes
     recipes.forEach((recipe) => {
         const recipeModel = recipeTemplate(recipe, null, null, null);
         const recipeCardDOM = recipeModel.getRecipeCardDom();
@@ -162,7 +154,7 @@ function clearRecipesSection() {
     recipesSection.innerHTML = "";
 }
 
-function setIngrRecord(recipes) { //TODO: fonction pour configurer les ingredients dans ingredientsRecord
+function setIngrRecord(recipes) { //fonction pour configurer les ingredients dans ingredientsRecord
     ingredientsRecord = [];
     for (let recipe of recipes) { //pour chaque element du tableau recipes
         for (let ingr of recipe.ingredients) { //pour chaque élément temporaire de l'objet tableau inclus dans ingredients de recipes
@@ -174,7 +166,7 @@ function setIngrRecord(recipes) { //TODO: fonction pour configurer les ingredien
     displayIngr(ingredientsRecord);
 }
 
-function setUstRecord(recipes) { //TODO: fonction pour configurer les ustensiles en minuscules        
+function setUstRecord(recipes) { //fonction pour configurer les ustensiles en minuscules        
     for (let recipe of recipes) { // OK
         for (let ust of recipe.ustensils) {
             let ustensilLower = ust.toLowerCase();
@@ -188,7 +180,7 @@ function setUstRecord(recipes) { //TODO: fonction pour configurer les ustensiles
     displayUst(ustensilsRecord);
 }
 
-function setApplRecord(recipes) { // TODO: fonction poiur configurer les app en minuscules
+function setApplRecord(recipes) { //  fonction poiur configurer les app en minuscules
 
     for (let recipe of recipes) {
         if (!appliancesRecord.includes(recipe.appliance.toLowerCase())) {
@@ -200,7 +192,7 @@ function setApplRecord(recipes) { // TODO: fonction poiur configurer les app en 
 
 }
 
-function displayIngr(ingredients) { //TODO: fonction pour afficher les ingredients dans le filtre ingredients
+function displayIngr(ingredients) { //fonction pour afficher les ingredients dans le filtre ingredients
     ingrContents.innerHTML = "";
     ingredients.forEach((ingredient) => {
         const recipeModel = recipeTemplate(null, ingredient, null, null);
@@ -208,7 +200,7 @@ function displayIngr(ingredients) { //TODO: fonction pour afficher les ingredien
     })
 }
 
-function displayUst(ustensiles) { //TODO: fonction pour afficher les ustensiles dans le filtre ust
+function displayUst(ustensiles) { // fonction pour afficher les ustensiles dans le filtre ust
     ustContents.innerHTML = "";
     ustensiles.forEach((ustensile) => {
         //console.log(ustensile);
@@ -217,7 +209,7 @@ function displayUst(ustensiles) { //TODO: fonction pour afficher les ustensiles 
     })
 }
 
-function displayAppl(appliances) { //TODO: fonction pour afficher les appareils dans le filtre app
+function displayAppl(appliances) { // fonction pour afficher les appareils dans le filtre app
     applContents.innerHTML = "";
     appliances.forEach((appliance) => {
         const recipeModel = recipeTemplate(null, null, null, appliance);
@@ -226,7 +218,7 @@ function displayAppl(appliances) { //TODO: fonction pour afficher les appareils 
 }
 const numberTotalRecipes = document.querySelector(".numberTotalRecipes");
 
-async function displayNumberTotalOfRecipes(recipes) { //TODO: fonction pour afficher le nombre total de recettes
+async function displayNumberTotalOfRecipes(recipes) { //fonction pour afficher le nombre total de recettes
     numberTotalRecipes.textContent = recipes.length;
 }
 
@@ -236,7 +228,7 @@ async function updateNumberTotalOfRecipes(updatedTotal) {
     numberTotalRecipes.textContent = updatedTotal;
 }
 
-function changeSideChevron() { //TODO: fonction pour changer le sens du chevron lors du clic
+function changeSideChevron() { //fonction pour changer le sens du chevron lors du clic
     const chevronUp1 = document.querySelector("#chevron1");
     const ingrBtn = document.querySelector("#ingrBtn");
     ingrBtn.addEventListener("click", () => {
@@ -279,7 +271,7 @@ function changeSideChevron() { //TODO: fonction pour changer le sens du chevron 
 
 
 
-function filterUst() { // TODO: fonction pour filtrer les ustensiles
+function filterUst() { //  fonction pour filtrer les ustensiles
     ustInput.addEventListener("input", function () {
         const filteredUst = ustensilsRecord.filter(ustensile =>
             ustensile.toLowerCase().includes(ustInput.value.toLowerCase()));
@@ -292,7 +284,7 @@ function filterUst() { // TODO: fonction pour filtrer les ustensiles
     });
 }
 
-function filterIngr() { //TODO: fonction pour filtrer les ingrédients
+function filterIngr() { //fonction pour filtrer les ingrédients
 
     ingrInput.addEventListener("input", function () {
         console.log("filterResults avant filterIngr", filterResults);
@@ -308,7 +300,7 @@ function filterIngr() { //TODO: fonction pour filtrer les ingrédients
     });
 }
 
-function filterApp() { //TODO: fonction pour filtrer les app
+function filterApp() { //fonction pour filtrer les app
 
     appInput.addEventListener("input", function () {
         const filteredApp = appliancesRecord.filter(appliance =>
@@ -599,7 +591,7 @@ ustDropdown.addEventListener("click", function (event) { // filtre en fonction d
 
 
 
-function updateRecipes(updatedRecipes) { //TODO: fonction pour mettre à jour les recettes en fonction des tags
+function updateRecipes(updatedRecipes) { //fonction pour mettre à jour les recettes en fonction des tags
     //console.log('updateRecipes is called with', recipes);
 
     recipesSection.innerHTML = "";
