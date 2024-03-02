@@ -82,30 +82,27 @@ function search() { //fonction de recherche
         //vide la section des resultats
         recipesSection.innerHTML = "";
 
-        for (let singleDataRecord of dataRecord) { //boucle dans le tableau qui contient toutes les données​⁡
-            let result = singleDataRecord.label.toLowerCase().indexOf(formSearch.value.toLowerCase());
-            if (result !== -1) { // si singleDataLabelLower commence par searchLower
-                filterResults.push(singleDataRecord); // on ajoute l'élément à filterResults
-                console.log("j'ajoute la data" + singleDataRecord.label + "au tableau filterResults");
+        //verifie si l'input correspond à une data du tableau dataRecord
+        //si oui l'ajoute à filterResults
+        // for (let singleDataRecord of dataRecord) {
+        dataRecord.forEach(singleDataRecord => {
+            if (singleDataRecord.label.toLowerCase().includes(formSearch.value.toLowerCase())) {
+                filterResults.push(singleDataRecord);
             }
+        });
 
-            for (let singleFilterResult of filterResults) { // pour chaque élément des résultats filtrés dans filterResults
-                for (let singleRecipe of recipes) { // et pour chaque recette de recipes
-                    if (singleRecipe.id === singleFilterResult.id) { // vérifie si les id correspond
-                        let doublon = false;
-                        for (let i = 0; i < filterRecord.length; i++) {
-                            if (filterRecord[i].id === singleRecipe.id) {
-                                doublon = true;
-                                break;
-                            }
-                        }
-                        if (!doublon) {
-                            filterRecord.push(singleRecipe);
-                        }
+        // de sorte à constituer un tableau avec uniquement des résultats filtré sans doublon
+        filterResults.forEach(singleFilterResult => {
+            // for (let singleRecipe of recipes) { // et pour chaque recette de recipes
+            recipes.forEach(singleRecipe => {
+                if (singleRecipe.id === singleFilterResult.id) { // vérifie si les id correspond
+
+                    if (!filterRecord.includes(singleRecipe)) {
+                        filterRecord.push(singleRecipe);
                     }
                 }
-            }
-        }
+            });
+        });
         if (filterResults.length === 0) {
             recipesSection.innerHTML = "Aucune recette ne contient " + formSearch.value + " vous pouvez chercher « tarte aux pommes », « poisson », etc.";
             recipesSection.style.display = "flex";
@@ -218,7 +215,7 @@ function displayAppl(appliances) { //fonction pour afficher les appareils dans l
 
 //fonction pour afficher le nombre total de recettes
 const numberTotalRecipes = document.querySelector(".numberTotalRecipes");
-async function displayNumberTotalOfRecipes(recipes) { 
+async function displayNumberTotalOfRecipes(recipes) {
     numberTotalRecipes.textContent = recipes.length;
 }
 
@@ -230,7 +227,7 @@ async function updateNumberTotalOfRecipes(updatedTotal) {
 }
 
 //fonction pour changer le sens du chevron lors du clic
-function changeSideChevron() { 
+function changeSideChevron() {
     const chevronUp1 = document.querySelector("#chevron1");
     const ingrBtn = document.querySelector("#ingrBtn");
     ingrBtn.addEventListener("click", () => {
@@ -443,7 +440,7 @@ appDropdown.addEventListener("click", function (event) { // filtre en fonction d
 
         console.log("2", filterRecord);
     }
-}); 
+});
 
 //Fonction pour filtrer les recettes selon le tag USTENSILES
 ustDropdown.addEventListener("click", function (event) { // filtre en fonction du tag ustensile
@@ -536,10 +533,10 @@ function filterWithTag(tag, type, add) {
 
     displayRecipes(result)
 
-} 
+}
 
 //Fonction pour mettre à jour les recettes
-function updateRecipes(updatedRecipes) { 
+function updateRecipes(updatedRecipes) {
     //console.log('updateRecipes is called with', recipes);
 
     recipesSection.innerHTML = "";
