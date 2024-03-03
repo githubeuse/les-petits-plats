@@ -16,6 +16,15 @@ export default function recipeTemplate(recipes, ingredient, ustensil, appliance)
         const link = document.createElement('a');
         article.appendChild(link);
 
+        const divImage = document.createElement("div");
+        divImage.setAttribute("class", "divImage");
+        link.appendChild(divImage);
+
+        const divPrice = document.createElement("div");
+        divPrice.setAttribute("class", "divPrice");
+        divPrice.textContent = singleRecipe.time + "min";
+        divImage.appendChild(divPrice);
+
         const img = document.createElement('img');
         img.setAttribute("src", picture);
         img.setAttribute("class", "recipePicture");
