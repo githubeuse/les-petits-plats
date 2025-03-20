@@ -133,13 +133,12 @@ function setUstRecord(recipes) { //fonction pour configurer les ustensiles en mi
     for (let recipe of recipes) { // OK
             for (let ust of recipe.ustensils) {
                 let ustensilLower = ust.toLowerCase();
-                console.log(ustensilLower);
                 if (!ustensilsRecord.includes(ustensilLower)) {
                     ustensilsRecord.push(ustensilLower);
                 }
             }
     }
-    //console.log(ustensilsRecord);
+
 }
 
 function setApplRecord(recipes) { //fonction pour configurer les appareils en minuscules et les ajouter à appliancesRecord
@@ -159,7 +158,6 @@ function displayIngr(ingredients) { //fonction pour afficher les ingredients dan
 
 function displayUst(ustensiles) { //fonction pour afficher les ustensiles dans le filtre
     ustensiles.forEach((ustensile) => {
-        //console.log(ustensile);
         const recipeModel = recipeTemplate(null, null, ustensile, null);
         recipeModel.createFilterUstensils();
     })
@@ -189,7 +187,6 @@ function changeSideChevron(){ //fonction pour changer le sens du chevron du filt
             chevronUp.classList.add("fa-chevron-up");
         }
     });   
-    console.log("coucou");
 }
 
 

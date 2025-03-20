@@ -91,7 +91,6 @@ export default function recipeTemplate(recipes, ingredient, ustensil, appliance)
         const ustContents = document.querySelector("#ustContents");
         const singleUstContent = document.createElement("button");
         singleUstContent.innerText = ustensil;
-        console.log(ustensil);
         ustContents.appendChild(singleUstContent);
     }
     
